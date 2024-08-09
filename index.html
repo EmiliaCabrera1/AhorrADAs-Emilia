@@ -9,6 +9,171 @@
   </head>
   <body>
     <header></header>
-    <main></main>
+    <main>
+      <section
+        id="categorias"
+        class="size-3/5 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto py-10"
+      >
+        <h2 class="font-bold text-2xl my-2">Categorías</h2>
+        <label for="nombre" class="font-semibold block">
+          Nombre
+          <div class="block w-full">
+            <input
+              type="text"
+              class="w-3/5 border-[0.5px] rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+            />
+            <button
+              class="font-normal text-sm bg-emerald-500 px-3 py-2 rounded-md text-slate-50 hover:bg-emerald-600 hover:transition-all"
+            >
+              Agregar
+            </button>
+          </div>
+        </label>
+        <div class="flex block">
+          <div class="flex-col text-emerald-700">
+            <p class="bg-emerald-100 rounded p-1 m-2">Comida</p>
+            <p class="bg-emerald-100 rounded p-1 m-2">Servicios</p>
+            <p class="bg-emerald-100 rounded p-1 m-2">Salidas</p>
+            <p class="bg-emerald-100 rounded p-1 m-2">Educación</p>
+            <p class="bg-emerald-100 rounded p-1 m-2">Transporte</p>
+            <p class="bg-emerald-100 rounded p-1 m-2">Trabajo</p>
+          </div>
+          <div class=" ">
+            <div class="text-cyan-600 p-1 m-2 gap-2">
+              <button>Editar</button>
+              <button>Eliminar</button>
+            </div>
+            <div class="text-cyan-600 p-1 m-2 gap-2">
+              <button>Editar</button>
+              <button>Eliminar</button>
+            </div>
+            <div class="text-cyan-600 p-1 m-2 gap-2">
+              <button>Editar</button>
+              <button>Eliminar</button>
+            </div>
+            <div class="text-cyan-600 p-1 m-2 gap-2">
+              <button>Editar</button>
+              <button>Eliminar</button>
+            </div>
+            <div class="text-cyan-600 p-1 m-2 gap-2">
+              <button>Editar</button>
+              <button>Eliminar</button>
+            </div>
+            <div class="text-cyan-600 p-1 m-2 gap-2">
+              <button>Editar</button>
+              <button>Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div
+          id="reportes"
+          class="size-3/5 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto"
+        >
+          <h2 class="font-bold text-2xl">Reportes</h2>
+
+          <picture class="flex justify-center m-8"
+            ><img src="./img/reportes-img.svg" alt=""
+          /></picture>
+          <p class="text-center font-normal text-base">
+            Operaciones insuficientes
+          </p>
+          <p class="text-center font-light text-base">
+            Prueba agregando más operaciones
+          </p>
+        </div>
+      </section>
+      <section>
+        <div
+          id="reportes"
+          class="size-3/5 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto"
+        >
+          <h2 class="font-bold text-2xl my-5">Reportes</h2>
+          <div>
+            <h3 class="font-semibold text-xl my-5">Resumen</h3>
+            <table class="w-full">
+              <tr class="my-3 text-left">
+                <td>Categoría con mayor ganancia</td>
+                <td
+                  class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline text-right"
+                >
+                  Trabajo
+                </td>
+                <td class="text-green-600 font-semibold text-right">+$60</td>
+              </tr>
+              <tr class="my-3 text-left">
+                <td>Categoría con mayor gasto</td>
+                <td
+                  class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline text-right"
+                >
+                  Servicios
+                </td>
+                <td class="text-red-600 font-semibold text-right">-$2</td>
+              </tr>
+              <tr class="my-3 text-left">
+                <td>Categoría con mayor balance</td>
+                <td
+                  class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline text-right"
+                >
+                  Trabajo
+                </td>
+                <td class="text-slate-950 font-semibold text-right">$60</td>
+              </tr>
+              <tr class="my-3 text-left">
+                <td>Mes con mayor ganancia</td>
+                <td class="text-right">09/08/2024</td>
+                <td class="text-green-600 font-semibold text-right">$60</td>
+              </tr>
+              <tr class="my-3 text-left">
+                <td>Mes con mayor gasto</td>
+                <td class="text-right">08/08/2024</td>
+                <td class="text-red-600 font-semibold text-right">-$2</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <h3 class="font-semibold text-xl my-5">Total por categorías</h3>
+            <table class="w-full">
+              <tr class="my-3 text-right">
+                <th class="text-left">Categoría</th>
+                <th>Ganancia</th>
+                <th>Gastos</th>
+                <th>Balance</th>
+              </tr>
+              <tr class="my-3 text-right">
+                <th class="text-left">Servicios</th>
+                <td class="text-green-600">+$0</td>
+                <td class="text-red-600">-$2</td>
+                <td>-$2</td>
+              </tr>
+              <tr class="my-3 text-right">
+                <th class="text-left">Trabajo</th>
+                <td class="text-green-600">+$60</td>
+                <td class="text-red-600">-$0</td>
+                <td>$60</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <h3 class="font-semibold text-xl my-5">Total por mes</h3>
+            <table class="w-full">
+              <tr class="my-3 text-right">
+                <th class="text-left">Mes</th>
+                <th>Ganancia</th>
+                <th>Gastos</th>
+                <th>Balance</th>
+              </tr>
+              <tr class="my-3 text-right">
+                <th class="text-left">8/20204</th>
+                <td class="text-green-600">+$60</td>
+                <td class="text-red-600">-$2</td>
+                <td>$58</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
