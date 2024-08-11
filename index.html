@@ -10,27 +10,191 @@
   <body>
     <header>
       <nav class="flex justify-between pt-5 bg-green-300">
-        <div class=" flex flex-row gap-2.5 m-2">
-            <img src="imagenes/wallet_25330.ico" alt="billetera con dinero" class="h-10 w-10 object-contain">
-            <h1 class=" flex items-center text-3xl font-mono p	">AhorrADAs</h1>
+        <div class="flex flex-row gap-2.5 m-2">
+          <img
+            src="imagenes/wallet_25330.ico"
+            alt="billetera con dinero"
+            class="h-10 w-10 object-contain"
+          />
+          <h1 class="flex items-center text-3xl font-mono p">AhorrADAs</h1>
         </div>
-        <ul class="flex flex-row  mr-2">
-            <li class="flex items-center">
-                <img src="imagenes/artboard_123065.ico" alt="una l con una flecha hacia arriba" class="h-6 w-6 object-contain">
-                <a href="#" class="p-2" >Balance</a>
-            </li>
-            <li class="flex items-center">
-                <img src="imagenes/tag-icon_34341.ico" alt="una etiqueta de ropa" class="h-6 w-6 object-contain"  >
-                <a href="#" class="p-2" >Categoria</a>
-            </li>
-            <li class="flex items-center">
-                <img src="imagenes/5_icon-icons.com_68890.ico" alt="un circulo partiodo en varias porciones con diferente color cada porcion" class="h-6 w-6 object-contain">
-                <a href="#" class="p-2">Reporte</a>
-            </li>
+        <ul class="flex flex-row mr-2">
+          <li class="flex items-center">
+            <img
+              src="imagenes/artboard_123065.ico"
+              alt="una l con una flecha hacia arriba"
+              class="h-6 w-6 object-contain"
+            />
+            <a href="#" class="p-2">Balance</a>
+          </li>
+          <li class="flex items-center">
+            <img
+              src="imagenes/tag-icon_34341.ico"
+              alt="una etiqueta de ropa"
+              class="h-6 w-6 object-contain"
+            />
+            <a href="#" class="p-2">Categoria</a>
+          </li>
+          <li class="flex items-center">
+            <img
+              src="imagenes/5_icon-icons.com_68890.ico"
+              alt="un circulo partiodo en varias porciones con diferente color cada porcion"
+              class="h-6 w-6 object-contain"
+            />
+            <a href="#" class="p-2">Reporte</a>
+          </li>
         </ul>
-            
-    </nav>
+      </nav>
     </header>
-    <main></main>
+    <main>
+      <section>
+        <div
+          id="operaciones"
+          class="flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-[20px]"
+        >
+          <div class="flex justify-between">
+            <h2 class="font-bold text-2xl">Operaciones</h2>
+            <button
+              class="font-normal text-sm bg-emerald-500 px-3 py-2 rounded-md text-slate-50 hover:bg-emerald-600 hover:transition-all"
+            >
+              + Nueva operación
+            </button>
+          </div>
+          <picture class="flex justify-center m-8"
+            ><img src="./img/operaciones-img.svg" alt=""
+          /></picture>
+          <p class="text-center font-normal text-base">Sin resultados</p>
+          <p class="text-center font-light text-base">
+            Cambiar los filtros o agregar operaciones
+          </p>
+        </div>
+      </section>
+      <section>
+        <div
+          id="nueva-operacion"
+          class="size-3/5 flex-col border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[20px] m-auto"
+        >
+          <h2 class="font-bold text-2xl mb-[6px]">Nueva Operación</h2>
+          <form action="">
+            <label
+              for="descripcion"
+              class="block my-[3px] font-light text-base"
+            >
+              Descripción
+              <input
+                type="text"
+                class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+              />
+            </label>
+            <label for="monto" class="block my-[3px] font-light text-base">
+              Monto
+              <input
+                type="number"
+                class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+              />
+            </label>
+            <label for="tipo" class="block my-[3px] font-light text-base">
+              Tipo
+              <select
+                name="tipo"
+                id="tipo"
+                class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="gasto">Gasto</option>
+                <option value="ganancia">Ganancia</option>
+              </select>
+            </label>
+            <label for="categoria" class="block my-[3px] font-light text-base">
+              Categoría
+              <select
+                name="categoria"
+                id="categoria"
+                class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="comida">Comida</option>
+                <option value="servicios">Servicios</option>
+                <option value="salidas">Salidas</option>
+                <option value="educacion">Educación</option>
+                <option value="transporte">Transporte</option>
+                <option value="trabajo">Trabajo</option>
+              </select>
+            </label>
+            <label for="fecha" class="block my-[3px] font-light text-base"
+              >Fecha
+              <input
+                type="date"
+                class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+              />
+            </label>
+          </form>
+          <div class="flex justify-end gap-x-3 mt-3">
+            <button
+              class="font-normal text-sm bg-gray-200 px-3 py-2 rounded-md text-slate-950 hover:bg-gray-300 hover:transition-all"
+            >
+              Cancelar
+            </button>
+            <button
+              class="font-normal text-sm bg-emerald-500 px-3 py-2 rounded-md text-slate-50 hover:bg-emerald-600 hover:transition-all"
+            >
+              Agregar
+            </button>
+          </div>
+        </div>
+      </section>
+      <section id="lista-operaciones" class="basis-2/3">
+        <div
+          id="lista-operaciones"
+          class="basis-2/3 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-[20px]"
+        >
+          <div class="flex justify-between">
+            <h2 class="font-bold text-2xl">Operaciones</h2>
+            <button
+              class="font-normal text-sm bg-emerald-500 px-3 py-2 rounded-md text-slate-50 hover:bg-emerald-600 hover:transition-all"
+            >
+              + Nueva operación
+            </button>
+          </div>
+          <table class="my-4 w-full py-5">
+            <tr class="my-3 text-left">
+              <th>Descripción</th>
+              <th>Categoría</th>
+              <th>Fecha</th>
+              <th>Monto</th>
+              <th>Acciones</th>
+            </tr>
+            <tr class="my-3">
+              <td>Prueba</td>
+              <td
+                class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline"
+              >
+                Servicios
+              </td>
+              <td>8/8/2024</td>
+              <td class="text-red-600 font-semibold">-$2</td>
+              <td class="gap-2">
+                <button class="text-cyan-600">Editar</button>
+                <button class="text-cyan-600">Eliminar</button>
+              </td>
+            </tr>
+            <tr class="my-3">
+              <td>Prueba 2</td>
+              <td
+                class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline"
+              >
+                Servicios
+              </td>
+              <td>9/8/2024</td>
+              <td class="text-green-600 font-semibold">+$60</td>
+              <td class="gap-2">
+                <button class="text-cyan-600">Editar</button>
+                <button class="text-cyan-600">Eliminar</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
