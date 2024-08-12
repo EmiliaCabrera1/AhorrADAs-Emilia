@@ -72,6 +72,50 @@
             <div id="gananciaTotalFinal"><p>$ 0</p></div>
           </div>
         </div>
+
+        /*seccion de filtros*/
+
+        <div id="filtros"  class="flex  flex-wrap w-96   border-solid border-[1px] border-black m-[20px] p-[6px] ">
+          <div class="flex justify-between w-[100%]">
+              <h2 class="text-[1.5em]">Filtros</h2>
+          <button id="ocultarFiltros"   class="m-[5px] text-cyan-600">Ocultar filtros</button> 
+          </div>
+          <div class=" w-[100%] m-[20px] ">
+              <h3>Tipos</h3>
+              <select  id="tipo" class="w-[80%] border-solid border-[1px] border-black mt-[10px] ml-[30px]">
+                  <option value="gastos">Gastos</option>
+                  <option value="ganancia">Ganancia</option>
+                  <option value="todos">Todos</option>
+                 </select>
+          </div>
+          <div class=" w-[100%] m-[20px]">
+              <h3>Categoria</h3>
+              <select  id="categoria" class="w-[80%] border-solid border-[1px] border-black mt-[10px] ml-[30px]">
+                  <option value="todos">Todos</option>
+                  <option value="comida">Comida</option>
+                  <option value="servicios">Servicios</option>
+                  <option value="salidas">Salidas</option>
+                  <option value="transporte">Transporte</option>
+                  <option value="trabajo">Trabajo</option>
+                 </select>
+          </div>
+          <div class="w-[100%] m-[20px] flex flex-col">
+              <label for="fecha">Desde</label>
+              <input type="date" id="fecha" name="fecha" class="w-[80%] border-solid border-[1px] border-black mt-[10px] ml-[30px]">
+          </div>
+          <div class=" w-[100%] m-[20px]">
+              <h3>Categoria</h3>
+              <select  id="ordenar" class="w-[80%] border-solid border-[1px] border-black mt-[10px] ml-[30px]">
+                  <option value="masReciente">Mas reciente</option>
+                  <option value="menosReciente">Menos reciente</option>
+                  <option value="mayorMonto">Mayor monto</option>
+                  <option value="menorMonto">Menor monto</option>
+                  <option value="a/z">A/Z</option>
+                  <option value="z/a">Z/A</option>
+                 </select>
+          </div>
+          </div>
+          /* final de la seccion filtros*/
         <div
           id="operaciones"
           class="flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-[20px]"
@@ -84,6 +128,7 @@
               + Nueva operación
             </button>
           </div>
+
           <picture class="flex justify-center m-8"
             ><img src="./img/operaciones-img.svg" alt=""
           /></picture>
