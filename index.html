@@ -35,7 +35,10 @@
       </ul>
     </nav>
   </header>
-  <main>
+  <main class="flex mt-[100px]">
+
+    <!--Seccion Balance-->
+
     <section>
       <div id="seccionBalance" class="flex-col w-96 border-solid border-[1px] border-black p-[6px] m-[20px]">
         <h2 class="text-[1.5em]">Balance</h2>
@@ -110,7 +113,11 @@
           </select>
         </div>
       </div>
+    </section>
       <!-- final de la seccion filtros -->
+    <section>  
+       <!-- seccion operaciones -->
+
       <div id="operaciones"
         class="flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-[20px]">
         <div class="flex justify-between">
@@ -128,7 +135,9 @@
         </p>
       </div>
     </section>
-    <section>
+
+        <!--Seccion Operacion -->
+    <section class="hidden"> <!-- Aca esta la clase hidden se activa cuando hagamos las conecciones con javascript -->
       <div id="nueva-operacion"
         class="size-3/5 flex-col border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[20px] m-auto">
         <h2 class="font-bold text-2xl mb-[6px]">Nueva Operación</h2>
@@ -182,7 +191,9 @@
         </div>
       </div>
     </section>
-    <section id="lista-operaciones" class="basis-2/3">
+
+     <!-- Seccion Lista de operaciones -->
+    <section id="lista-operaciones" class="basis-2/3 hidden"> <!-- clase hideden agregada -->
       <div id="lista-operaciones"
         class="basis-2/3 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-[20px]">
         <div class="flex justify-between">
@@ -227,7 +238,9 @@
         </table>
       </div>
     </section>
-    <section id="categorias"
+
+     <!-- Seccion Categoria input-->
+    <section id="categorias" class="hidden"> <!-- clase hidden agregada -->
       class="size-3/5 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto py-10">
       <h2 class="font-bold text-2xl my-2">Categorías</h2>
       <label for="nombre" class="font-semibold block">
@@ -278,7 +291,9 @@
         </div>
       </div>
     </section>
-    <section>
+
+     <!--Seccion Reporte donde estan las operacciones -->
+    <section class="hidden"> <!-- clase hidden agregada -->
       <div id="reportes"
         class="size-3/5 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto">
         <h2 class="font-bold text-2xl">Reportes</h2>
@@ -292,7 +307,8 @@
         </p>
       </div>
     </section>
-    <section>
+     <!-- seccion Reporte -->
+    <section class="hidden"> <!-- clase hidden agregada -->
       <div id="reportes"
         class="size-3/5 flex-col border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto">
         <h2 class="font-bold text-2xl my-5">Reportes</h2>
@@ -375,7 +391,7 @@
       </div>
     </section>
 
-    <section>
+    <section class="hidden">
       <h4>Hola Vivi, Hola Emi!</h4>
       <p>Estamos testeando las branches y los merge.</p>
     </section>
