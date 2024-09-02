@@ -1,65 +1,3 @@
-/*Menu Hamburguerza */
-
-// const botonMenuHamburger = document.getElementById("botonMenuHamburger");
-// const navMenu = document.getElementById("navMenu");
-// const menuHamburger = document.getElementById("menuHamburger");
-// const botonMenuHamburgerCerrar = document.getElementById(
-//   "botonMenuHamburgerCerrar"
-// );
-// const menuHamburguerContainer = document.getElementById(
-//   "menuHamburguerContainer"
-// );
-
-// function agregar() {
-//   navMenu.style.display = "none";
-//   menuHamburguerContainer.style.display = "flex";
-//   menuHamburguerContainer.classList.add("menu");
-//   menuHamburger.style.display = "flex";
-//   menuHamburger.classList.add("menuLi");
-//   botonMenuHamburger.style.display = "none";
-//   botonMenuHamburgerCerrar.style.display = "block";
-// }
-// //console.log(agregar)
-// botonMenuHamburger.addEventListener("click", agregar);
-
-// function cerrar() {
-//   menuHamburguerContainer.style.display = "none";
-//   botonMenuHamburger.style.display = "block";
-//   navMenu.style.display = "block";
-// }
-// //console.log(cerrar)
-// botonMenuHamburgerCerrar.addEventListener("click", cerrar);
-
-// /*Conexion de las etiquitas a con el main*/
-// const pantallaPrincipal = document.getElementById("pantallaPrincipal");
-// const categoria1 = document.getElementById("categoria1");
-// const categorias = document.getElementById("categorias");
-// const reportes = document.getElementById("reportes");
-// const pantallaPrincipal1 = document.getElementById("pantallaPrincipal1");
-
-// function cerrarPantallaPrincipalYAgreagarCategorias() {
-//   pantallaPrincipal.style.display = "none";
-//   categorias.style.display = "flex";
-// }
-// //console.log(cerrarPantallaPrincipalYAgreagarCategorias);
-// categoria1.addEventListener(
-//   "click",
-//   cerrarPantallaPrincipalYAgreagarCategorias
-// );
-// /* conexion del boton de nueva operacion que te lleva a descripcion */
-// const operacionesBotton = document.getElementById("operacionesBotton");
-// const nuevaOperaciones = document.getElementById("nuevaOperaciones");
-// console.log(cerrarPantallaPrincipalYAgreagarDescripcion);
-
-// function cerrarPantallaPrincipalYAgreagarDescripcion() {
-//   pantallaPrincipal.style.display = "none";
-//   nuevaOperaciones.style.display = "flex";
-// }
-// operacionesBotton.addEventListener(
-//   "click",
-//   cerrarPantallaPrincipalYAgreagarDescripcion
-// );
-
 const $ = (id) => document.getElementById(id);
 
 const balanceNav = $("balance-nav");
@@ -86,6 +24,7 @@ const inputFecha = $("input-fecha");
 const botonAgregarOperacion = $("button-agregar-operacion");
 const botonCancelarOperacion = $("button-cancelar-operacion");
 let contadorDeOperaciones;
+const tablaCuerpo = $("tabla-cuerpo");
 
 if (localStorage.getItem("contadorDeOperaciones")) {
   contadorDeOperaciones = parseInt(localStorage.getItem("contadorOperaciones"));
@@ -114,6 +53,7 @@ function mostrarBalance() {
   seccionReportes.classList.add("hidden");
   seccionCategorias.classList.add("hidden");
   pantallaPrincipal.classList.remove("hidden");
+  listaDeOperaciones();
 }
 balanceNav.addEventListener("click", mostrarBalance);
 
@@ -149,20 +89,25 @@ function borrarDatos() {
 
 function guardarDatos() {
   contadorDeOperaciones++;
-
   const operacion = {
     id: contadorDeOperaciones,
     descripcion: inputDescripcion.value,
     monto: inputMonto.value,
-    selectTipo: selectTipo.value,
+    tipo: selectTipo.value,
     categoria: selectCategoria.value,
-    inputFecha: inputFecha.value,
+    fecha: inputFecha.value,
   };
-  localStorage.setItem("operaciones", JSON.stringify(operacion));
+  const operacionesJSON = localStorage.getItem("operaciones");
+  let operaciones = JSON.parse(operacionesJSON);
+  if (operaciones === null) {
+    operaciones = [];
+  }
+  operaciones.push(operacion);
+  localStorage.setItem("operaciones", JSON.stringify(operaciones));
   localStorage.setItem("contadorDeOperaciones", contadorDeOperaciones);
-
   borrarDatos();
 }
+
 function volverPantallaPrincipal() {
   seccionNuevaOperacion.classList.add("hidden");
   pantallaPrincipal.classList.remove("hidden");
@@ -171,10 +116,41 @@ function volverPantallaPrincipal() {
 botonAgregarOperacion.addEventListener("click", guardarDatos);
 botonCancelarOperacion.addEventListener("click", volverPantallaPrincipal);
 
+function crearTabla() {
+  tablaCuerpo.innerHTML = "";
+
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON);
+
+  operaciones.forEach((operacion) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td class="text-left">${operacion.descripcion}</td>
+      <td class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline">${
+        operacion.categoria
+      }</td>
+      <td>${operacion.fecha}</td>
+      <td class="text-${
+        operacion.tipo === "ganancia" ? "green" : "red"
+      }-600 font-semibold">${operacion.tipo === "ganancia" ? "+" : "-"}${
+      operacion.monto
+    }</td>
+      <td class="gap-2">
+        <button class="text-cyan-600">Editar</button>
+        <button class="text-cyan-600">Eliminar</button>
+      </td>
+    `;
+
+    tablaCuerpo.appendChild(row);
+  });
+}
+
 function listaDeOperaciones() {
   if (localStorage.getItem("operaciones")) {
     sinOperaciones.classList.add("hidden");
     conOperaciones.classList.remove("hidden");
+    crearTabla();
   } else {
     sinOperaciones.classList.remove("hidden");
     conOperaciones.classList.add("hidden");

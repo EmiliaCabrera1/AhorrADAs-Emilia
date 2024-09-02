@@ -26,7 +26,10 @@
           <button id="botonMenuHamburguesa" class="sm:hidden">
             <img src="./imagenes/icono-hamburgesa.svg" class="w-8 h-8" />
           </button>
-          <button id="botonMenuHamburguesaCerrar" class="hidden ml-auto">
+          <button
+            id="botonMenuHamburguesaCerrar"
+            class="hidden sm:hidden ml-auto"
+          >
             <img src="./imagenes/icono-x.svg" class="w-8 h-8" />
           </button>
           <ul
@@ -70,7 +73,7 @@
         </div>
       </nav>
     </header>
-    <main class="py-4">
+    <main class="py-8">
       <!--Pantalla principal-->
 
       <div id="pantalla-principal" class="flex flex-wrap sm:flex-nowrap">
@@ -214,35 +217,8 @@
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr class="my-3 mx-5">
-                    <td class="text-left">Prueba</td>
-                    <td
-                      class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline"
-                    >
-                      Servicios
-                    </td>
-                    <td>8/8/2024</td>
-                    <td class="text-red-600 font-semibold">-$2</td>
-                    <td class="gap-2">
-                      <button class="text-cyan-600">Editar</button>
-                      <button class="text-cyan-600">Eliminar</button>
-                    </td>
-                  </tr>
-                  <tr class="my-3">
-                    <td class="text-left">Prueba 2</td>
-                    <td
-                      class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline"
-                    >
-                      Servicios
-                    </td>
-                    <td>9/8/2024</td>
-                    <td class="text-green-600 font-semibold">+$60</td>
-                    <td class="gap-2">
-                      <button class="text-cyan-600">Editar</button>
-                      <button class="text-cyan-600">Eliminar</button>
-                    </td>
-                  </tr>
+                <tbody id="tabla-cuerpo">
+                  <!-- Aca se crearan las filas de la tabla -->
                 </tbody>
               </table>
             </div>
@@ -328,10 +304,13 @@
       </section>
 
       <!-- Seccion Categoria input-->
-      <section id="seccion-categorias" class="my-5 mx-auto hidden">
+      <section
+        id="seccion-categorias"
+        class="flex place-content-center mx-auto hidden"
+      >
         <!-- clase hidden agregada -->
         <div
-          class="w-[500px] border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto py-10"
+          class="p-[10px] w-[60%] min-w-[360px] border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md sm:p-[30px]"
         >
           <h2 class="font-bold text-2xl my-2">Categorías</h2>
           <div class="flex w-full gap-2">
@@ -390,9 +369,12 @@
       </section>
 
       <!--Seccion Reporte  -->
-      <section id="seccion-reportes" class="my-5 mx-auto hidden">
+      <section
+        id="seccion-reportes"
+        class="flex place-content-center mx-auto hidden"
+      >
         <div
-          class="w-[500px] border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto py-10"
+          class="p-[10px] w-[60%] min-w-[360px] border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md sm:p-[30px]"
         >
           <h2 class="font-bold text-2xl">Reportes</h2>
 
