@@ -24,7 +24,9 @@ const inputFecha = $("input-fecha");
 const botonAgregarOperacion = $("button-agregar-operacion");
 const botonCancelarOperacion = $("button-cancelar-operacion");
 let contadorDeOperaciones;
-const tablaCuerpo = $("tabla-cuerpo");
+const tablaCuerpoOperaciones = $("tabla-cuerpo");
+const agregarNuevaCategoria = $("agregar-nueva-categoria");
+const tablaCuerpoCategorias = $("tabla-cuerpo-categorias");
 
 if (localStorage.getItem("contadorDeOperaciones")) {
   contadorDeOperaciones = parseInt(localStorage.getItem("contadorOperaciones"));
@@ -116,8 +118,8 @@ function volverPantallaPrincipal() {
 botonAgregarOperacion.addEventListener("click", guardarDatos);
 botonCancelarOperacion.addEventListener("click", volverPantallaPrincipal);
 
-function crearTabla() {
-  tablaCuerpo.innerHTML = "";
+function crearTablaOperaciones() {
+  tablaCuerpoOperaciones.innerHTML = "";
 
   const operacionesJSON = localStorage.getItem("operaciones");
   const operaciones = JSON.parse(operacionesJSON);
@@ -142,7 +144,7 @@ function crearTabla() {
       </td>
     `;
 
-    tablaCuerpo.appendChild(row);
+    tablaCuerpoOperaciones.appendChild(row);
   });
 }
 
@@ -150,11 +152,51 @@ function listaDeOperaciones() {
   if (localStorage.getItem("operaciones")) {
     sinOperaciones.classList.add("hidden");
     conOperaciones.classList.remove("hidden");
-    crearTabla();
+    crearTablaOperaciones();
   } else {
     sinOperaciones.classList.remove("hidden");
     conOperaciones.classList.add("hidden");
   }
 }
 
+function crearCategoriasPorDefecto() {
+  const categoriasPorDefecto = [
+    "Comida",
+    "Servicios",
+    "Salidas",
+    "Educacion",
+    "Transporte",
+    "Trabajo",
+  ];
+  localStorage.setItem("categorias", JSON.stringify(categoriasPorDefecto));
+}
+
+function mostrarTablaCategorias() {
+  if (!localStorage.getItem("categorias")) {
+    crearCategoriasPorDefecto();
+  }
+
+  tablaCuerpoCategorias.innerHTML = "";
+
+  const categoriasGuardadas =
+    JSON.parse(localStorage.getItem("categorias")) || [];
+
+  categoriasGuardadas.forEach((categoria) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <div class="flex flex-row"> 
+          <div class="text-emerald-700 inline bg-emerald-100 rounded p-1 my-2">${categoria}</div>
+          <div class="ml-auto flex gap-2">
+              <button class="text-cyan-600">Editar</button>
+              <button class="text-cyan-600">Eliminar</button>
+          </div>
+      </div>
+    `;
+
+    tablaCuerpoCategorias.appendChild(row);
+  });
+}
+
 listaDeOperaciones();
+mostrarTablaCategorias();
