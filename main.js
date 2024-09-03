@@ -28,6 +28,9 @@ const tablaCuerpoOperaciones = $("tabla-cuerpo");
 const agregarNuevaCategoria = $("agregar-nueva-categoria");
 const tablaCuerpoCategorias = $("tabla-cuerpo-categorias");
 
+/*revisa el conteo de las operaciones, primero se fija si hay operaciones 
+ guardadas para seguir numerando, si no hay inicia en 0 */
+
 if (localStorage.getItem("contadorDeOperaciones")) {
   contadorDeOperaciones = parseInt(localStorage.getItem("contadorOperaciones"));
 } else {
@@ -89,6 +92,11 @@ function borrarDatos() {
   inputFecha.value = currentDate.toISOString().slice(0, 10);
 }
 
+/* guarda los datos de cada input en localStorage, contadorDeOperaciones++ aumenta el numero 
+asi las operaciones son 1,2,3 etc.
+despues crea un objeto con todos los datos de los input
+*/
+
 function guardarDatos() {
   contadorDeOperaciones++;
   const operacion = {
@@ -99,15 +107,17 @@ function guardarDatos() {
     categoria: selectCategoria.value,
     fecha: inputFecha.value,
   };
+  /* trae las operaciones ya guardadas y sino empieza un nuevo array*/
   const operacionesJSON = localStorage.getItem("operaciones");
   let operaciones = JSON.parse(operacionesJSON);
   if (operaciones === null) {
     operaciones = [];
   }
-  operaciones.push(operacion);
-  localStorage.setItem("operaciones", JSON.stringify(operaciones));
-  localStorage.setItem("contadorDeOperaciones", contadorDeOperaciones);
-  borrarDatos();
+  /* agrega el objeto de la nueva operacion al grupo de operaciones que ya teniamos o el creado de cero*/
+  operaciones.push(operacion); //push agrega la operacion
+  localStorage.setItem("operaciones", JSON.stringify(operaciones)); //convierte el array en un string y lo guarda en locals
+  localStorage.setItem("contadorDeOperaciones", contadorDeOperaciones); // guarda el contador aumentado
+  borrarDatos(); //borra los datos del formulario
 }
 
 function volverPantallaPrincipal() {
@@ -119,14 +129,15 @@ botonAgregarOperacion.addEventListener("click", guardarDatos);
 botonCancelarOperacion.addEventListener("click", volverPantallaPrincipal);
 
 function crearTablaOperaciones() {
+  /*limpia la tabla*/
   tablaCuerpoOperaciones.innerHTML = "";
-
+  /*trae los datos del local storage y los convierte en un array de objetos*/
   const operacionesJSON = localStorage.getItem("operaciones");
   const operaciones = JSON.parse(operacionesJSON);
-
+  /*para cada operacion crea una fila*/
   operaciones.forEach((operacion) => {
     const row = document.createElement("tr");
-
+    /*Estilamos la fila porque ya no existe en html, la creamos y estilamos */
     row.innerHTML = `
       <td class="text-left">${operacion.descripcion}</td>
       <td class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline">${
@@ -143,7 +154,7 @@ function crearTablaOperaciones() {
         <button class="text-cyan-600">Eliminar</button>
       </td>
     `;
-
+    /*Aparece la fila* */
     tablaCuerpoOperaciones.appendChild(row);
   });
 }
@@ -170,13 +181,14 @@ function crearCategoriasPorDefecto() {
   ];
   localStorage.setItem("categorias", JSON.stringify(categoriasPorDefecto));
 }
-
+/* revisa si hay categorias guardadas, si no las hay muesta las categorias por defecto*/
 function mostrarTablaCategorias() {
   if (!localStorage.getItem("categorias")) {
+    // ! niega la afirmacion
     crearCategoriasPorDefecto();
   }
 
-  tablaCuerpoCategorias.innerHTML = "";
+  tablaCuerpoCategorias.innerHTML = ""; //limpia la tabla, para cargar la nueva si algo se elimino o0 edito
 
   const categoriasGuardadas =
     JSON.parse(localStorage.getItem("categorias")) || [];
