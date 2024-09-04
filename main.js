@@ -27,12 +27,21 @@ let contadorDeOperaciones;
 const tablaCuerpoOperaciones = $("tabla-cuerpo");
 const agregarNuevaCategoria = $("agregar-nueva-categoria");
 const tablaCuerpoCategorias = $("tabla-cuerpo-categorias");
+const seccionEditarOperacion = $("seccion-editar-operacion");
+const botonGuardarEdiccion = $("button-guardar-editar-operacion");
+const inputDescripcionEditar = $("input-descripcion-editar");
+const inputMontoEditar = $("input-monto-editar");
+const selectTipoEditar = $("select-tipo-editar");
+const selectCategoriaEditar = $("select-categoria-editar");
+const inputFechaEditar = $("input-fecha-editar");
 
 /*revisa el conteo de las operaciones, primero se fija si hay operaciones 
  guardadas para seguir numerando, si no hay inicia en 0 */
 
 if (localStorage.getItem("contadorDeOperaciones")) {
-  contadorDeOperaciones = parseInt(localStorage.getItem("contadorOperaciones"));
+  contadorDeOperaciones = parseInt(
+    localStorage.getItem("contadorDeOperaciones")
+  );
 } else {
   contadorDeOperaciones = 0;
 }
@@ -41,6 +50,7 @@ function mostrarReporte() {
   pantallaPrincipal.classList.add("hidden");
   seccionNuevaOperacion.classList.add("hidden");
   seccionCategorias.classList.add("hidden");
+  seccionEditarOperacion.classList.add("hidden");
   seccionReportes.classList.remove("hidden");
 }
 reporteNav.addEventListener("click", mostrarReporte);
@@ -49,6 +59,7 @@ function mostrarCategorias() {
   pantallaPrincipal.classList.add("hidden");
   seccionNuevaOperacion.classList.add("hidden");
   seccionReportes.classList.add("hidden");
+  seccionEditarOperacion.classList.add("hidden");
   seccionCategorias.classList.remove("hidden");
 }
 categoriaNav.addEventListener("click", mostrarCategorias);
@@ -57,13 +68,13 @@ function mostrarBalance() {
   seccionNuevaOperacion.classList.add("hidden");
   seccionReportes.classList.add("hidden");
   seccionCategorias.classList.add("hidden");
+  seccionEditarOperacion.classList.add("hidden");
   pantallaPrincipal.classList.remove("hidden");
   listaDeOperaciones();
 }
 balanceNav.addEventListener("click", mostrarBalance);
 
 function mostrarMenuHamburgesa() {
-  console.log("mostrar menu hamb");
   navMenu.classList.remove("hidden");
   botonHamburguesa.classList.add("hidden");
   botonHamburguesaCerrar.classList.remove("hidden");
@@ -150,8 +161,12 @@ function crearTablaOperaciones() {
       operacion.monto
     }</td>
       <td class="gap-2">
-        <button class="text-cyan-600">Editar</button>
-        <button class="text-cyan-600">Eliminar</button>
+        <button class="text-cyan-600" onclick=editarOperacion(${
+          operacion.id
+        }) >Editar</button>
+        <button class="text-cyan-600" onclick=eliminarOperacion(${
+          operacion.id
+        }) >Eliminar</button>
       </td>
     `;
     /*Aparece la fila* */
@@ -212,3 +227,49 @@ function mostrarTablaCategorias() {
 
 listaDeOperaciones();
 mostrarTablaCategorias();
+
+/* editar operacion, agrege una seccion en html de editar operacion igual
+  a la de nueva operacion pero con boton editar */
+
+function editarOperacion(id) {
+  pantallaPrincipal.classList.add("hidden");
+  seccionEditarOperacion.classList.remove("hidden");
+
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON);
+
+  const operacion = operaciones.find((operacion) => {
+    return operacion.id === id; // busca la operacion con un id exactamente igual al id de arriba
+  });
+  console.log(operacion);
+
+  inputDescripcionEditar.value = operacion.descripcion;
+  inputMontoEditar.value = operacion.monto;
+  selectTipoEditar.value = operacion.tipo;
+  selectCategoriaEditar.value = operacion.categoria;
+  inputFechaEditar.value = operacion.fecha; //trae los datos que corresponden a ese id
+
+  botonGuardarEdiccion.addEventListener("click", () => guardarEdicion(id)); //() => espera a el click para ejecutar guardarEdicion
+}
+
+function guardarEdicion(id) {
+  const operacion = {
+    id: id,
+    descripcion: inputDescripcionEditar.value,
+    monto: inputMontoEditar.value,
+    tipo: selectTipoEditar.value,
+    categoria: selectCategoriaEditar.value,
+    fecha: inputFechaEditar.value,
+  };
+
+  const operacionesJSON = localStorage.getItem("operaciones");
+  let operaciones = JSON.parse(operacionesJSON);
+  operaciones = operaciones.filter((operacion) => operacion.id !== id); // operaciones filtra y solo guarda las diferentes a mi id
+
+  operaciones.push(operacion);
+  localStorage.setItem("operaciones", JSON.stringify(operaciones));
+
+  mostrarBalance();
+}
+
+function eliminarOperacion(id) {}
