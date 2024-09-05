@@ -175,7 +175,7 @@ function crearTablaOperaciones() {
 }
 
 function listaDeOperaciones() {
-  if (localStorage.getItem("operaciones")) {
+  if (JSON.parse(localStorage.getItem("operaciones")).length > 0) {
     sinOperaciones.classList.add("hidden");
     conOperaciones.classList.remove("hidden");
     crearTablaOperaciones();
@@ -183,6 +183,59 @@ function listaDeOperaciones() {
     sinOperaciones.classList.remove("hidden");
     conOperaciones.classList.add("hidden");
   }
+}
+
+/* editar operacion, agrege una seccion en html de editar operacion igual
+  a la de nueva operacion pero con boton editar */
+
+function editarOperacion(id) {
+  pantallaPrincipal.classList.add("hidden");
+  seccionEditarOperacion.classList.remove("hidden");
+
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON);
+
+  const operacion = operaciones.find((operacion) => {
+    return operacion.id === id; // busca la operacion con un id exactamente igual al id de arriba
+  });
+
+  inputDescripcionEditar.value = operacion.descripcion;
+  inputMontoEditar.value = operacion.monto;
+  selectTipoEditar.value = operacion.tipo;
+  selectCategoriaEditar.value = operacion.categoria;
+  inputFechaEditar.value = operacion.fecha; //trae los datos que corresponden a ese id
+
+  botonGuardarEdiccion.addEventListener("click", () => guardarEdicion(id)); //() => espera a el click para ejecutar guardarEdicion
+}
+
+function guardarEdicion(id) {
+  const operacion = {
+    id: id,
+    descripcion: inputDescripcionEditar.value,
+    monto: inputMontoEditar.value,
+    tipo: selectTipoEditar.value,
+    categoria: selectCategoriaEditar.value,
+    fecha: inputFechaEditar.value,
+  };
+
+  const operacionesJSON = localStorage.getItem("operaciones");
+  let operaciones = JSON.parse(operacionesJSON);
+  operaciones = operaciones.filter((operacion) => operacion.id !== id); // operaciones filtra y solo guarda las diferentes a mi id
+
+  operaciones.push(operacion);
+  localStorage.setItem("operaciones", JSON.stringify(operaciones));
+
+  mostrarBalance();
+}
+
+function eliminarOperacion(id) {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  let operaciones = JSON.parse(operacionesJSON);
+  operaciones = operaciones.filter((operacion) => operacion.id !== id);
+
+  localStorage.setItem("operaciones", JSON.stringify(operaciones));
+
+  mostrarBalance();
 }
 
 function crearCategoriasPorDefecto() {
@@ -227,49 +280,3 @@ function mostrarTablaCategorias() {
 
 listaDeOperaciones();
 mostrarTablaCategorias();
-
-/* editar operacion, agrege una seccion en html de editar operacion igual
-  a la de nueva operacion pero con boton editar */
-
-function editarOperacion(id) {
-  pantallaPrincipal.classList.add("hidden");
-  seccionEditarOperacion.classList.remove("hidden");
-
-  const operacionesJSON = localStorage.getItem("operaciones");
-  const operaciones = JSON.parse(operacionesJSON);
-
-  const operacion = operaciones.find((operacion) => {
-    return operacion.id === id; // busca la operacion con un id exactamente igual al id de arriba
-  });
-  console.log(operacion);
-
-  inputDescripcionEditar.value = operacion.descripcion;
-  inputMontoEditar.value = operacion.monto;
-  selectTipoEditar.value = operacion.tipo;
-  selectCategoriaEditar.value = operacion.categoria;
-  inputFechaEditar.value = operacion.fecha; //trae los datos que corresponden a ese id
-
-  botonGuardarEdiccion.addEventListener("click", () => guardarEdicion(id)); //() => espera a el click para ejecutar guardarEdicion
-}
-
-function guardarEdicion(id) {
-  const operacion = {
-    id: id,
-    descripcion: inputDescripcionEditar.value,
-    monto: inputMontoEditar.value,
-    tipo: selectTipoEditar.value,
-    categoria: selectCategoriaEditar.value,
-    fecha: inputFechaEditar.value,
-  };
-
-  const operacionesJSON = localStorage.getItem("operaciones");
-  let operaciones = JSON.parse(operacionesJSON);
-  operaciones = operaciones.filter((operacion) => operacion.id !== id); // operaciones filtra y solo guarda las diferentes a mi id
-
-  operaciones.push(operacion);
-  localStorage.setItem("operaciones", JSON.stringify(operaciones));
-
-  mostrarBalance();
-}
-
-function eliminarOperacion(id) {}
