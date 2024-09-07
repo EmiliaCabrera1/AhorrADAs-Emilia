@@ -29,6 +29,7 @@ const agregarNuevaCategoria = $("agregar-nueva-categoria");
 const tablaCuerpoCategorias = $("tabla-cuerpo-categorias");
 const seccionEditarOperacion = $("seccion-editar-operacion");
 const botonGuardarEdiccion = $("button-guardar-editar-operacion");
+const botonCancelarEdicion = $("button-cancelar-editar-operacion");
 const inputDescripcionEditar = $("input-descripcion-editar");
 const inputMontoEditar = $("input-monto-editar");
 const selectTipoEditar = $("select-tipo-editar");
@@ -227,6 +228,8 @@ function guardarEdicion(id) {
 
   mostrarBalance();
 }
+
+botonCancelarEdicion.addEventListener("click", volverPantallaPrincipal);
 
 function eliminarOperacion(id) {
   const operacionesJSON = localStorage.getItem("operaciones");
