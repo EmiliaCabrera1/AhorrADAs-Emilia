@@ -229,7 +229,7 @@ function guardarEdicion(id) {
   mostrarBalance();
 }
 
-botonCancelarEdicion.addEventListener("click", volverPantallaPrincipal);
+botonCancelarEdicion.addEventListener("click", mostrarBalance);
 
 function eliminarOperacion(id) {
   const operacionesJSON = localStorage.getItem("operaciones");
