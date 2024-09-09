@@ -16,11 +16,11 @@ const sinOperaciones = $("sin-operaciones");
 const seccionNuevaOperacion = $("nueva-operacion");
 const conOperaciones = $("con-operaciones");
 const botonNuevaOperacion = $("button-nueva-operacion");
-const inputDescripcion = $("input-descripcion");
-const inputMonto = $("input-monto");
-const selectTipo = $("select-tipo");
-const selectCategoria = $("select-categoria");
-const inputFecha = $("input-fecha");
+const inputDescripcion = $("input-descripcion-operacion");
+const inputMonto = $("input-monto-operacion");
+const selectTipo = $("select-tipo-operacion");
+const selectCategoria = $("select-categoria-operacion");
+const inputFecha = $("input-fecha-operacion");
 const botonAgregarOperacion = $("button-agregar-operacion");
 const botonCancelarOperacion = $("button-cancelar-operacion");
 let contadorDeOperaciones;
@@ -29,6 +29,7 @@ const agregarNuevaCategoria = $("agregar-nueva-categoria");
 const tablaCuerpoCategorias = $("tabla-cuerpo-categorias");
 const seccionEditarOperacion = $("seccion-editar-operacion");
 const botonGuardarEdiccion = $("button-guardar-editar-operacion");
+const botonCancelarEdicion = $("button-cancelar-editar-operacion");
 const inputDescripcionEditar = $("input-descripcion-editar");
 const inputMontoEditar = $("input-monto-editar");
 const selectTipoEditar = $("select-tipo-editar");
@@ -227,6 +228,8 @@ function guardarEdicion(id) {
 
   mostrarBalance();
 }
+
+botonCancelarEdicion.addEventListener("click", volverPantallaPrincipal);
 
 function eliminarOperacion(id) {
   const operacionesJSON = localStorage.getItem("operaciones");
