@@ -25,6 +25,9 @@ const botonAgregarOperacion = $("button-agregar-operacion");
 const botonCancelarOperacion = $("button-cancelar-operacion");
 let contadorDeOperaciones;
 const tablaCuerpoOperaciones = $("tabla-cuerpo");
+const botonAgregarNuevaCategoria = $("agregar-nueva-categoria");
+const inputNuevaCategoria = $("nombre-categoria-nueva");
+const tablaCuerpoCategorias = $("tabla-cuerpo-categorias");
 const seccionEditarOperacion = $("seccion-editar-operacion");
 const botonGuardarEdiccion = $("button-guardar-editar-operacion");
 const botonCancelarEdicion = $("button-cancelar-editar-operacion");
@@ -33,6 +36,8 @@ const inputMontoEditar = $("input-monto-editar");
 const selectTipoEditar = $("select-tipo-editar");
 const selectCategoriaEditar = $("select-categoria-editar");
 const inputFechaEditar = $("input-fecha-editar");
+const inputCategoriaNueva = $("input-categoria-nueva");
+const botonNuevaCategoria = $("agregar-nueva-categoria");
 
 /*revisa el conteo de las operaciones, primero se fija si hay operaciones 
  guardadas para seguir numerando, si no hay inicia en 0 */
@@ -90,6 +95,7 @@ botonHamburguesaCerrar.addEventListener("click", cerrarMenuHamburgesa);
 function nuevaOperacion() {
   pantallaPrincipal.classList.add("hidden");
   seccionNuevaOperacion.classList.remove("hidden");
+  mostrarSelectCategoria(selectCategoria);
 }
 botonNuevaOperacion.addEventListener("click", nuevaOperacion);
 
@@ -124,9 +130,9 @@ function guardarDatos() {
     operaciones = [];
   }
   /* agrega el objeto de la nueva operacion al grupo de operaciones que ya teniamos o el creado de cero*/
-  operaciones.push(operacion); 
-  localStorage.setItem("operaciones", JSON.stringify(operaciones)); 
-  localStorage.setItem("contadorDeOperaciones", contadorDeOperaciones); 
+  operaciones.push(operacion); //push agrega la operacion
+  localStorage.setItem("operaciones", JSON.stringify(operaciones)); //convierte el array en un string y lo guarda en locals
+  localStorage.setItem("contadorDeOperaciones", contadorDeOperaciones); // guarda el contador aumentado
   borrarDatos(); //borra los datos del formulario
 }
 
@@ -190,6 +196,7 @@ function listaDeOperaciones() {
 function editarOperacion(id) {
   pantallaPrincipal.classList.add("hidden");
   seccionEditarOperacion.classList.remove("hidden");
+  mostrarSelectCategoria(selectCategoriaEditar);
 
   const operacionesJSON = localStorage.getItem("operaciones");
   const operaciones = JSON.parse(operacionesJSON);
@@ -239,99 +246,69 @@ function eliminarOperacion(id) {
   mostrarBalance();
 }
 
-//vivi
-
- 
-  
-const categoriasIniciales = ["todos", "comida", "servicio", "salidas", "transporte", "trabajo"];
-  const tablaCuerpoCategorias = document.getElementById('tabla-cuerpo-categorias');
-  const inputCategoriaNueva = document.getElementById('nombre-categoria-nueva');
-  const botonAgregar = document.getElementById('agregar-nueva-categoria');
-  const selectFiltros = document.getElementById('categoria-filtros');
-
-  // Función para renderizar las categorías en la tabla y el select
-  function renderizarCategorias() {
-    // Limpiar la tabla y el select antes de agregar los elementos
-    tablaCuerpoCategorias.innerHTML = '';
-    selectFiltros.innerHTML = '<option value="todos">Todos</option>'; // Mantener opción "Todos"
-
-    categoriasIniciales.forEach((categoria, index) => {
-      // Renderizar en la tabla
-      const nuevaFila = document.createElement('div');
-      nuevaFila.classList.add('flex', 'justify-between', 'mt-[10px]');
-      nuevaFila.innerHTML = `
-        <p class="bg-emerald-100 rounded p-1 m-2">${categoria}</p>
-        <div class="flex">
-          <button class="editar-categoria text-cyan-600 p-1 m-2 gap-2" data-index="${index}">Editar</button>
-          <button class="eliminar-categoria text-red-600 p-1 m-2 gap-2" data-index="${index}">Eliminar</button>
-        </div>
-      `;
-      tablaCuerpoCategorias.appendChild(nuevaFila);
-
-      // Renderizar en el select
-      const nuevaOpcion = document.createElement('option');
-      nuevaOpcion.value = categoria.toLowerCase();
-      nuevaOpcion.textContent = categoria;
-      selectFiltros.appendChild(nuevaOpcion);
-    });
-
-    // Añadir funcionalidad de eliminar y editar
-    agregarEventos();
+function crearCategoriasPorDefecto() {
+  const categoriasPorDefecto = [
+    "Comida",
+    "Servicios",
+    "Salidas",
+    "Educacion",
+    "Transporte",
+    "Trabajo",
+  ];
+  localStorage.setItem("categorias", JSON.stringify(categoriasPorDefecto));
+}
+/* revisa si hay categorias guardadas, si no las hay muesta las categorias por defecto*/
+function mostrarTablaCategorias() {
+  if (!localStorage.getItem("categorias")) {
+    // ! niega la afirmacion
+    crearCategoriasPorDefecto();
   }
 
-  // Función para agregar nueva categoría
-  botonAgregar.addEventListener('click', function() {
-    const nuevaCategoria = inputCategoriaNueva.value.trim();
+  tablaCuerpoCategorias.innerHTML = ""; //limpia la tabla, para cargar la nueva si algo se elimino o0 edito
 
-    if (nuevaCategoria !== '') {
-      categoriasIniciales.push(nuevaCategoria);
-      renderizarCategorias();
-      inputCategoriaNueva.value = ''; // Limpiar el input
-    }
+  const categoriasGuardadas =
+    JSON.parse(localStorage.getItem("categorias")) || [];
+
+  categoriasGuardadas.forEach((categoria) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <div class="flex flex-row"> 
+          <div class="text-emerald-700 inline bg-emerald-100 rounded p-1 my-2">${categoria}</div>
+          <div class="ml-auto flex gap-2">
+              <button class="text-cyan-600">Editar</button>
+              <button class="text-cyan-600">Eliminar</button>
+          </div>
+      </div>
+    `;
+
+    tablaCuerpoCategorias.appendChild(row);
   });
+}
 
-  // Función para eliminar una categoría
-  function eliminarCategoria(index) {
-    categoriasIniciales.splice(index, 1); // Eliminar categoría del array
-    renderizarCategorias(); // Volver a renderizar tabla y select
-  }
+function mostrarSelectCategoria(select) {
+  const categorias = JSON.parse(localStorage.getItem("categorias") || []);
 
-  // Función para editar una categoría
-  function editarCategoria(index) {
-    const nuevaCategoria = prompt('Edita la categoría:', categoriasIniciales[index]);
-    if (nuevaCategoria !== null && nuevaCategoria.trim() !== '') {
-      categoriasIniciales[index] = nuevaCategoria.trim();
-      renderizarCategorias();
-    }
-  }
+  select.innerHTML = `<option value="">Selecciona una opción</option>`;
 
-  // Función para agregar eventos a los botones de editar y eliminar
-  function agregarEventos() {
-    const botonesEliminar = document.querySelectorAll('.eliminar-categoria');
-    const botonesEditar = document.querySelectorAll('.editar-categoria');
+  categorias.forEach((categoria) => {
+    const option = document.createElement("option");
+    option.innerText = categoria;
+    option.value = categoria;
+    select.appendChild(option);
+  });
+}
 
-    botonesEliminar.forEach(boton => {
-      boton.addEventListener('click', function() {
-        const index = this.getAttribute('data-index');
-        eliminarCategoria(index);
-      });
-    });
+function agregarNuevaCategoria() {
+  const categoriasGuardadas = JSON.parse(
+    localStorage.getItem("categorias") || []
+  );
+  categoriasGuardadas.push(inputCategoriaNueva.value);
+  localStorage.setItem("categorias", JSON.stringify(categoriasGuardadas));
+  mostrarTablaCategorias();
+  inputCategoriaNueva.innerText = "";
+}
+botonNuevaCategoria.addEventListener("click", agregarNuevaCategoria);
 
-    botonesEditar.forEach(boton => {
-      boton.addEventListener('click', function() {
-        const index = this.getAttribute('data-index');
-        editarCategoria(index);
-      });
-    });
-  }
-
-  
-  renderizarCategorias();
-
-
-  
-
-
-
-
-
+listaDeOperaciones();
+mostrarTablaCategorias();

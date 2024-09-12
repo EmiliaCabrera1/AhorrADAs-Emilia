@@ -119,7 +119,7 @@
           <!-- seccion de filtros -->
 
           <div
-            id="seccion"
+            id="seccion-filtros"
             class="flex flex-wrap border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-[20px]"
           >
             <div class="flex justify-between w-[100%]">
@@ -131,7 +131,7 @@
             <div class="w-[100%] my-2">
               <h3>Tipos</h3>
               <select
-                id="tipo"
+                id="tipo-filtros"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               >
                 <option value="gastos">Gastos</option>
@@ -142,7 +142,7 @@
             <div class="w-[100%] my-2">
               <h3>Categoria</h3>
               <select
-                id="categoria"
+                id="categoria-filtros"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               >
                 <option value="todos">Todos</option>
@@ -157,7 +157,7 @@
               <label for="data">Desde</label>
               <input
                 type="date"
-                id="data"
+                id="data-filtros"
                 name="data"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               />
@@ -260,8 +260,8 @@
           >
             <option value="">Selecciona una opción</option>
             <option value="gasto">Gasto</option>
-            <option value="ganancia">Ganancia</option></select
-          >xx
+            <option value="ganancia">Ganancia</option>
+          </select>
 
           <label class="block my-[3px] font-light text-base"> Categoría </label>
           <select
@@ -269,12 +269,6 @@
             class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
           >
             <option value="">Selecciona una opción</option>
-            <option value="comida">Comida</option>
-            <option value="servicios">Servicios</option>
-            <option value="salidas">Salidas</option>
-            <option value="educacion">Educación</option>
-            <option value="transporte">Transporte</option>
-            <option value="trabajo">Trabajo</option>
           </select>
 
           <label for="date" class="block my-[3px] font-light text-base">
@@ -349,12 +343,6 @@
             class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
           >
             <option value="">Selecciona una opción</option>
-            <option value="comida">Comida</option>
-            <option value="servicios">Servicios</option>
-            <option value="salidas">Salidas</option>
-            <option value="educacion">Educación</option>
-            <option value="transporte">Transporte</option>
-            <option value="trabajo">Trabajo</option>
           </select>
 
           <label for="date" class="block my-[3px] font-light text-base">
@@ -396,7 +384,7 @@
             <label for="nombre" class="font-semibold block"> Nombre </label>
 
             <input
-              id="nombre-categoria-nueva"
+              id="input-categoria-nueva"
               name="nombre"
               type="text"
               class="border-[0.5px] rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500 flex-1"
