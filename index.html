@@ -381,7 +381,9 @@
         >
           <h2 class="font-bold text-2xl my-2">Categorías</h2>
           <div class="flex w-full gap-2">
-            <label for="nombre" class="font-semibold block"> Nombre </label>
+            <label for="nombre" class="font-semibold align-middle my-auto">
+              Nombre
+            </label>
 
             <input
               id="input-categoria-nueva"
@@ -398,6 +400,40 @@
           </div>
           <div id="tabla-cuerpo-categorias" class="w-full flex flex-col">
             <!-- Aca se mostraran las categorias -->
+          </div>
+        </div>
+      </section>
+      <section
+        id="seccion-editar-categoria"
+        class="flex place-content-center mx-auto hidden"
+      >
+        <div
+          class="p-[10px] w-[60%] min-w-[360px] border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md sm:p-[30px]"
+        >
+          <h2 class="font-bold text-2xl my-2">Editar Categoria</h2>
+          <div class="flex w-full gap-2">
+            <label for="nombre" class="font-semibold align-middle my-auto">
+              Nombre
+            </label>
+
+            <input
+              id="input-editar-categoria"
+              name="nombre"
+              type="text"
+              class="border-[0.5px] rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500 flex-1"
+            />
+            <button
+              id="editar-categoria"
+              class="font-normal text-sm bg-emerald-500 px-3 py-2 rounded-md text-slate-50 hover:bg-emerald-600 hover:transition-all my-2"
+            >
+              Editar
+            </button>
+            <button
+              id="cancelar-edicion"
+              class="font-normal text-sm bg-zinc-300 px-3 py-2 rounded-md text-zinc-800 hover:bg-zinc-400 hover:transition-all my-2"
+            >
+              Cancelar
+            </button>
           </div>
         </div>
       </section>
@@ -423,7 +459,9 @@
           </p>
         </div>
       </section>
+
       <!-- seccion Reporte ejemplo -->
+
       <section class="mx-auto my-5 hidden">
         <div
           id="#"
