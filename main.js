@@ -38,6 +38,10 @@ const selectCategoriaEditar = $("select-categoria-editar");
 const inputFechaEditar = $("input-fecha-editar");
 const inputCategoriaNueva = $("input-categoria-nueva");
 const botonNuevaCategoria = $("agregar-nueva-categoria");
+const inputEditarCategoria = $("input-editar-categoria");
+const botonEditarCategoria = $("editar-categoria");
+const botonCancelarEdicionCategoria = $("cancelar-edicion");
+const seccionEditarCategoria = $("seccion-editar-categoria");
 
 /*revisa el conteo de las operaciones, primero se fija si hay operaciones 
  guardadas para seguir numerando, si no hay inicia en 0 */
@@ -276,8 +280,8 @@ function mostrarTablaCategorias() {
       <div class="flex flex-row"> 
           <div class="text-emerald-700 inline bg-emerald-100 rounded p-1 my-2">${categoria}</div>
           <div class="ml-auto flex gap-2">
-              <button class="text-cyan-600">Editar</button>
-              <button class="text-cyan-600">Eliminar</button>
+              <button class="text-cyan-600" onclick=editarCategoria("${categoria}")>Editar</button>
+              <button class="text-cyan-600" onclick=eliminarCategoria("${categoria}")>Eliminar</button>
           </div>
       </div>
     `;
@@ -306,9 +310,51 @@ function agregarNuevaCategoria() {
   categoriasGuardadas.push(inputCategoriaNueva.value);
   localStorage.setItem("categorias", JSON.stringify(categoriasGuardadas));
   mostrarTablaCategorias();
-  inputCategoriaNueva.innerText = "";
+  inputCategoriaNueva.value = "";
 }
 botonNuevaCategoria.addEventListener("click", agregarNuevaCategoria);
+
+function eliminarCategoria(value) {
+  let categoriasGuardadas = JSON.parse(
+    localStorage.getItem("categorias") || []
+  );
+  categoriasGuardadas = categoriasGuardadas.filter(
+    (categoria) => categoria !== value
+  );
+
+  localStorage.setItem("categorias", JSON.stringify(categoriasGuardadas));
+  mostrarTablaCategorias();
+}
+function editarCategoria(value) {
+  seccionCategorias.classList.add("hidden");
+  seccionEditarCategoria.classList.remove("hidden");
+  inputEditarCategoria.value = value;
+  botonEditarCategoria.addEventListener("click", () =>
+    guardarEditarCategoria(value)
+  );
+}
+function cancelarEdicion() {
+  seccionEditarCategoria.classList.add("hidden");
+  seccionCategorias.classList.remove("hidden");
+}
+botonCancelarEdicionCategoria.addEventListener("click", cancelarEdicion);
+
+function guardarEditarCategoria(value) {
+  console.log("Guardar Editar", value);
+  let categoriasGuardadas = JSON.parse(
+    localStorage.getItem("categorias") || []
+  );
+  categoriasGuardadas = categoriasGuardadas.filter(
+    (categoria) => categoria !== value
+  );
+
+  categoriasGuardadas.push(inputEditarCategoria.value);
+  localStorage.setItem("categorias", JSON.stringify(categoriasGuardadas));
+
+  seccionEditarCategoria.classList.add("hidden");
+  seccionCategorias.classList.remove("hidden");
+  mostrarTablaCategorias();
+}
 
 listaDeOperaciones();
 mostrarTablaCategorias();
