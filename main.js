@@ -42,6 +42,10 @@ const inputEditarCategoria = $("input-editar-categoria");
 const botonEditarCategoria = $("editar-categoria");
 const botonCancelarEdicionCategoria = $("cancelar-edicion");
 const seccionEditarCategoria = $("seccion-editar-categoria");
+const inputFiltrarTipo = $("filtrar-tipo");
+const inputFiltrarCategoria = $("filtrar-categoria");
+const inputFiltrarFecha = $("filtrar-fecha");
+const inputFiltrarOrden = $("filtrar-orden");
 
 /*revisa el conteo de las operaciones, primero se fija si hay operaciones 
  guardadas para seguir numerando, si no hay inicia en 0 */
@@ -59,6 +63,7 @@ function mostrarReporte() {
   seccionNuevaOperacion.classList.add("hidden");
   seccionCategorias.classList.add("hidden");
   seccionEditarOperacion.classList.add("hidden");
+  seccionEditarCategoria.classList.add("hidden");
   seccionReportes.classList.remove("hidden");
 }
 reporteNav.addEventListener("click", mostrarReporte);
@@ -68,6 +73,7 @@ function mostrarCategorias() {
   seccionNuevaOperacion.classList.add("hidden");
   seccionReportes.classList.add("hidden");
   seccionEditarOperacion.classList.add("hidden");
+  seccionEditarCategoria.classList.add("hidden");
   seccionCategorias.classList.remove("hidden");
 }
 categoriaNav.addEventListener("click", mostrarCategorias);
@@ -77,8 +83,10 @@ function mostrarBalance() {
   seccionReportes.classList.add("hidden");
   seccionCategorias.classList.add("hidden");
   seccionEditarOperacion.classList.add("hidden");
+  seccionEditarCategoria.classList.add("hidden");
   pantallaPrincipal.classList.remove("hidden");
   listaDeOperaciones();
+  mostrarCategoriaInputFiltros();
 }
 balanceNav.addEventListener("click", mostrarBalance);
 
@@ -153,7 +161,12 @@ function crearTablaOperaciones() {
   tablaCuerpoOperaciones.innerHTML = "";
   /*trae los datos del local storage y los convierte en un array de objetos*/
   const operacionesJSON = localStorage.getItem("operaciones");
-  const operaciones = JSON.parse(operacionesJSON);
+  let operaciones = JSON.parse(operacionesJSON);
+
+  operaciones = filtrarPorTipo(operaciones, inputFiltrarTipo.value);
+
+  //  escribir funciones filtro
+
   /*para cada operacion crea una fila*/
   operaciones.forEach((operacion) => {
     const row = document.createElement("tr");
@@ -165,8 +178,8 @@ function crearTablaOperaciones() {
       }</td>
       <td>${operacion.fecha}</td>
       <td class="text-${
-        operacion.tipo === "ganancia" ? "green" : "red"
-      }-600 font-semibold">${operacion.tipo === "ganancia" ? "+" : "-"}${
+        operacion.tipo === "Ganancia" ? "green" : "red"
+      }-600 font-semibold">${operacion.tipo === "Ganancia" ? "+" : "-"}${
       operacion.monto
     }</td>
       <td class="gap-2">
@@ -355,6 +368,28 @@ function guardarEditarCategoria(value) {
   seccionCategorias.classList.remove("hidden");
   mostrarTablaCategorias();
 }
+function mostrarCategoriaInputFiltros() {
+  const categorias = JSON.parse(localStorage.getItem("categorias") || []);
+
+  inputFiltrarCategoria.innerHTML = `<option value="">Todas</option>`;
+
+  categorias.forEach((categoria) => {
+    const option = document.createElement("option");
+    option.innerText = categoria;
+    option.value = categoria;
+    inputFiltrarCategoria.appendChild(option);
+  });
+}
+
+function filtrarPorTipo(operaciones, tipo) {
+  if (tipo !== "Todos") {
+    operaciones = operaciones.filter((operacion) => operacion.tipo === tipo);
+  }
+  return operaciones;
+}
+
+inputFiltrarTipo.addEventListener("change", listaDeOperaciones);
 
 listaDeOperaciones();
 mostrarTablaCategorias();
+mostrarCategoriaInputFiltros();

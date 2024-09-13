@@ -131,41 +131,34 @@
             <div class="w-[100%] my-2">
               <h3>Tipos</h3>
               <select
-                id="tipo-filtros"
+                id="filtrar-tipo"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               >
-                <option value="gastos">Gastos</option>
-                <option value="ganancia">Ganancia</option>
-                <option value="todos">Todos</option>
+                <option value="Todos">Todos</option>
+                <option value="Gasto">Gasto</option>
+                <option value="Ganancia">Ganancia</option>
               </select>
             </div>
             <div class="w-[100%] my-2">
               <h3>Categoria</h3>
               <select
-                id="categoria-filtros"
+                id="filtrar-categoria"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
-              >
-                <option value="todos">Todos</option>
-                <option value="comida">Comida</option>
-                <option value="servicios">Servicios</option>
-                <option value="salidas">Salidas</option>
-                <option value="transporte">Transporte</option>
-                <option value="trabajo">Trabajo</option>
-              </select>
+              ></select>
             </div>
             <div class="w-[100%] my-2 flex flex-col">
               <label for="data">Desde</label>
               <input
                 type="date"
-                id="data-filtros"
+                id="filtrar-fecha"
                 name="data"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               />
             </div>
             <div class="w-[100%] my-2">
-              <h3>Categoria</h3>
+              <h3>Ordenar por</h3>
               <select
-                id="ordenar-filtros"
+                id="filtrar-orden"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               >
                 <option value="masReciente">Mas reciente</option>
@@ -259,8 +252,8 @@
             class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
           >
             <option value="">Selecciona una opción</option>
-            <option value="gasto">Gasto</option>
-            <option value="ganancia">Ganancia</option>
+            <option value="Gasto">Gasto</option>
+            <option value="Ganancia">Ganancia</option>
           </select>
 
           <label class="block my-[3px] font-light text-base"> Categoría </label>
@@ -333,8 +326,8 @@
             class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
           >
             <option value="">Selecciona una opción</option>
-            <option value="gasto">Gasto</option>
-            <option value="ganancia">Ganancia</option>
+            <option value="Gasto">Gasto</option>
+            <option value="Ganancia">Ganancia</option>
           </select>
 
           <label class="block my-[3px] font-light text-base"> Categoría </label>
