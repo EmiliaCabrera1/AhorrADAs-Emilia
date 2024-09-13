@@ -165,6 +165,7 @@ function crearTablaOperaciones() {
 
   operaciones = filtrarPorTipo(operaciones, inputFiltrarTipo.value);
   operaciones = filtrarPorCategoria(operaciones, inputFiltrarCategoria.value);
+  operaciones = filtrarPorFecha(operaciones, inputFiltrarFecha.value);
 
   //  escribir funciones filtro
 
@@ -401,6 +402,19 @@ function filtrarPorCategoria(operaciones, categoria) {
 }
 
 inputFiltrarCategoria.addEventListener("change", listaDeOperaciones);
+
+function filtrarPorFecha(operaciones, fecha) {
+  if (fecha !== "") {
+    operaciones = operaciones.filter((operacion) => {
+      const fechaDeOperacion = new Date(operacion.fecha);
+      const fechaFiltrado = new Date(fecha);
+      return fechaDeOperacion >= fechaFiltrado;
+    });
+  }
+  return operaciones;
+}
+
+inputFiltrarFecha.addEventListener("change", listaDeOperaciones);
 
 mostrarCategoriaInputFiltros();
 listaDeOperaciones();
