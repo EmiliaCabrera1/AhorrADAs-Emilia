@@ -164,6 +164,7 @@ function crearTablaOperaciones() {
   let operaciones = JSON.parse(operacionesJSON);
 
   operaciones = filtrarPorTipo(operaciones, inputFiltrarTipo.value);
+  operaciones = filtrarPorCategoria(operaciones, inputFiltrarCategoria.value);
 
   //  escribir funciones filtro
 
@@ -371,7 +372,7 @@ function guardarEditarCategoria(value) {
 function mostrarCategoriaInputFiltros() {
   const categorias = JSON.parse(localStorage.getItem("categorias") || []);
 
-  inputFiltrarCategoria.innerHTML = `<option value="">Todas</option>`;
+  inputFiltrarCategoria.innerHTML = `<option value="Todas">Todas</option>`;
 
   categorias.forEach((categoria) => {
     const option = document.createElement("option");
@@ -390,6 +391,17 @@ function filtrarPorTipo(operaciones, tipo) {
 
 inputFiltrarTipo.addEventListener("change", listaDeOperaciones);
 
+function filtrarPorCategoria(operaciones, categoria) {
+  if (categoria !== "Todas") {
+    operaciones = operaciones.filter(
+      (operacion) => operacion.categoria === categoria
+    );
+  }
+  return operaciones;
+}
+
+inputFiltrarCategoria.addEventListener("change", listaDeOperaciones);
+
+mostrarCategoriaInputFiltros();
 listaDeOperaciones();
 mostrarTablaCategorias();
-mostrarCategoriaInputFiltros();
