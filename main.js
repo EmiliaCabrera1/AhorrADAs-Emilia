@@ -46,6 +46,19 @@ const inputFiltrarTipo = $("filtrar-tipo");
 const inputFiltrarCategoria = $("filtrar-categoria");
 const inputFiltrarFecha = $("filtrar-fecha");
 const inputFiltrarOrden = $("filtrar-orden");
+const balanceTotalGanancias = $("balance-total-ganancias");
+const balanceTotalGastos = $("balance-total-gastos");
+const balanceTotal = $("balance-total");
+const balanceTotal = $("categoria-con-mas-ganancia-nombre");
+const balanceTotal = $("categoria-con-mas-ganancia-monto");
+const balanceTotal = $("categoria-con-mas-gastos-nombre");
+const balanceTotal = $("categoria-con-mas-gastos-monto");
+const balanceTotal = $("balance-total");
+const balanceTotal = $("balance-total");
+const balanceTotal = $("balance-total");
+const balanceTotal = $("balance-total");
+const balanceTotal = $("balance-total");
+const balanceTotal = $("balance-total");
 
 /*revisa el conteo de las operaciones, primero se fija si hay operaciones 
  guardadas para seguir numerando, si no hay inicia en 0 */
@@ -181,7 +194,7 @@ function crearTablaOperaciones() {
       <td>${operacion.fecha}</td>
       <td class="text-${
         operacion.tipo === "Ganancia" ? "green" : "red"
-      }-600 font-semibold">${operacion.tipo === "Ganancia" ? "+" : "-"}${
+      }-600 font-semibold">${operacion.tipo === "Ganancia" ? "+$" : "-$"}${
       operacion.monto
     }</td>
       <td class="gap-2">
@@ -195,6 +208,10 @@ function crearTablaOperaciones() {
     `;
     /*Aparece la fila* */
     tablaCuerpoOperaciones.appendChild(row);
+
+    balanceGanancias();
+    balanceGastos();
+    balancetotal();
   });
 }
 
@@ -415,6 +432,37 @@ function filtrarPorFecha(operaciones, fecha) {
 }
 
 inputFiltrarFecha.addEventListener("change", listaDeOperaciones);
+
+function balanceGanancias() {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const gastos = operaciones.filter(
+    (operacion) => operacion.tipo === "Ganancia"
+  );
+  let totalGanancias = 0;
+  gastos.forEach((ganancia) => (totalGanancias += parseInt(ganancia.monto)));
+  balanceTotalGanancias.innerText = `$${totalGanancias}`;
+}
+
+function balanceGastos() {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const gastos = operaciones.filter((operacion) => operacion.tipo === "Gasto");
+  let totalGastos = 0;
+  gastos.forEach((gasto) => (totalGastos += parseInt(gasto.monto)));
+  balanceTotalGastos.innerText = `$-${totalGastos}`;
+}
+
+function balancetotal() {
+  const gastos = parseInt(balanceTotalGastos.innerText.replace("$-", ""));
+  const ganancia = parseInt(balanceTotalGanancias.innerText.replace("$", ""));
+  const totalBalance = ganancia - gastos;
+  balanceTotal.innerText = `$${totalBalance}`;
+  balanceTotal.classList.remove("text-green-600", "text-red-600");
+  balanceTotal.classList.add(
+    totalBalance >= 0 ? "text-green-600" : "text-red-600"
+  );
+}
 
 mostrarCategoriaInputFiltros();
 listaDeOperaciones();

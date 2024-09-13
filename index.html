@@ -90,28 +90,35 @@
             <h2 class="font-bold text-2xl">Balance</h2>
 
             <div id="balance" class="flex justify-between mt-[20px]">
-              <div id="balance-ganancia">
+              <div>
                 <h3>Ganancia</h3>
               </div>
-              <div id="balance-ganancia-final">
-                <p>+ $ 0</p>
+              <div>
+                <p
+                  id="balance-total-ganancias"
+                  class="text-green-600 font-bold"
+                >
+                  + $ 0
+                </p>
               </div>
             </div>
 
-            <div id="ganancia-gastos" class="flex justify-between my-2">
+            <div class="flex justify-between my-2">
               <div>
                 <h3>Gastos</h3>
               </div>
-              <div id="gananciaGastosGastosFinal">
-                <p>- $ 0</p>
+              <div>
+                <p id="balance-total-gastos" class="text-red-600 font-bold">
+                  - $ 0
+                </p>
               </div>
             </div>
-            <div id="gananciaTotal" class="flex justify-between my-2">
-              <div id="gananciaTotalTotal">
+            <div class="flex justify-between my-2">
+              <div>
                 <h3>Total</h3>
               </div>
-              <div id="gananciaTotalFinal">
-                <p>$ 0</p>
+              <div>
+                <p id="balance-total" class="font-bold">$ 0</p>
               </div>
             </div>
           </div>
@@ -455,7 +462,7 @@
 
       <!-- seccion Reporte ejemplo -->
 
-      <section class="mx-auto my-5 hidden">
+      <section class="mx-auto my-5">
         <div
           id="#"
           class="w-[500px] border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto"
@@ -466,34 +473,52 @@
             <table class="w-full">
               <tr class="my-3 text-left">
                 <td>Categoría con mayor ganancia</td>
-                <td class="py-1 px-2 text-emerald-700 rounded text-right">
-                  Trabajo
-                </td>
-                <td class="text-green-600 font-semibold text-right">+$60</td>
+                <td
+                  class="py-1 px-2 text-emerald-700 rounded text-right"
+                  id="categoria-con-mas-ganancia-nombre"
+                ></td>
+                <td
+                  class="text-green-600 font-semibold text-right"
+                  id="categoria-con-mas-ganancia-monto"
+                ></td>
               </tr>
               <tr class="my-3 text-left">
                 <td>Categoría con mayor gasto</td>
-                <td class="py-1 px-2 text-emerald-700 rounded text-right">
-                  Servicios
-                </td>
-                <td class="text-red-600 font-semibold text-right">-$2</td>
+                <td
+                  class="py-1 px-2 text-emerald-700 rounded text-right"
+                  id="categoria-con-mas-gastos-nombre"
+                ></td>
+                <td
+                  class="text-red-600 font-semibold text-right"
+                  id="categoria-con-mas-gastos-monto"
+                ></td>
               </tr>
               <tr class="my-3 text-left">
                 <td>Categoría con mayor balance</td>
-                <td class="py-1 px-2 text-emerald-700 rounded text-right">
-                  Trabajo
-                </td>
-                <td class="text-slate-950 font-semibold text-right">$60</td>
+                <td
+                  class="py-1 px-2 text-emerald-700 rounded text-right"
+                  id="categoria-con-mas-balance-nombre"
+                ></td>
+                <td
+                  class="text-slate-950 font-semibold text-right"
+                  id="categoria-con-mas-balance-monto"
+                ></td>
               </tr>
               <tr class="my-3 text-left">
                 <td>Mes con mayor ganancia</td>
-                <td class="text-right">09/08/2024</td>
-                <td class="text-green-600 font-semibold text-right">$60</td>
+                <td class="text-right" id="mes-mas-ganancia-nombre"></td>
+                <td
+                  class="text-green-600 font-semibold text-right"
+                  id="mes-mas-ganancia-monto"
+                ></td>
               </tr>
               <tr class="my-3 text-left">
                 <td>Mes con mayor gasto</td>
-                <td class="text-right">08/08/2024</td>
-                <td class="text-red-600 font-semibold text-right">-$2</td>
+                <td class="text-right" id="mes-mas-gasto-nombre"></td>
+                <td
+                  class="text-red-600 font-semibold text-right"
+                  id="mes-mas-gasto-monto"
+                ></td>
               </tr>
             </table>
           </div>
