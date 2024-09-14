@@ -90,28 +90,35 @@
             <h2 class="font-bold text-2xl">Balance</h2>
 
             <div id="balance" class="flex justify-between mt-[20px]">
-              <div id="balance-ganancia">
+              <div>
                 <h3>Ganancia</h3>
               </div>
-              <div id="balance-ganancia-final">
-                <p>+ $ 0</p>
+              <div>
+                <p
+                  id="balance-total-ganancias"
+                  class="text-green-600 font-bold"
+                >
+                  + $ 0
+                </p>
               </div>
             </div>
 
-            <div id="ganancia-gastos" class="flex justify-between my-2">
+            <div class="flex justify-between my-2">
               <div>
                 <h3>Gastos</h3>
               </div>
-              <div id="gananciaGastosGastosFinal">
-                <p>- $ 0</p>
+              <div>
+                <p id="balance-total-gastos" class="text-red-600 font-bold">
+                  - $ 0
+                </p>
               </div>
             </div>
-            <div id="gananciaTotal" class="flex justify-between my-2">
-              <div id="gananciaTotalTotal">
+            <div class="flex justify-between my-2">
+              <div>
                 <h3>Total</h3>
               </div>
-              <div id="gananciaTotalFinal">
-                <p>$ 0</p>
+              <div>
+                <p id="balance-total" class="font-bold">$ 0</p>
               </div>
             </div>
           </div>
@@ -131,41 +138,34 @@
             <div class="w-[100%] my-2">
               <h3>Tipos</h3>
               <select
-                id="tipo-filtros"
+                id="filtrar-tipo"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               >
-                <option value="gastos">Gastos</option>
-                <option value="ganancia">Ganancia</option>
-                <option value="todos">Todos</option>
+                <option value="Todos">Todos</option>
+                <option value="Gasto">Gasto</option>
+                <option value="Ganancia">Ganancia</option>
               </select>
             </div>
             <div class="w-[100%] my-2">
               <h3>Categoria</h3>
               <select
-                id="categoria-filtros"
+                id="filtrar-categoria"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
-              >
-                <option value="todos">Todos</option>
-                <option value="comida">Comida</option>
-                <option value="servicios">Servicios</option>
-                <option value="salidas">Salidas</option>
-                <option value="transporte">Transporte</option>
-                <option value="trabajo">Trabajo</option>
-              </select>
+              ></select>
             </div>
             <div class="w-[100%] my-2 flex flex-col">
               <label for="data">Desde</label>
               <input
                 type="date"
-                id="data-filtros"
+                id="filtrar-fecha"
                 name="data"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               />
             </div>
             <div class="w-[100%] my-2">
-              <h3>Categoria</h3>
+              <h3>Ordenar por</h3>
               <select
-                id="ordenar-filtros"
+                id="filtrar-orden"
                 class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
               >
                 <option value="masReciente">Mas reciente</option>
@@ -259,8 +259,8 @@
             class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
           >
             <option value="">Selecciona una opción</option>
-            <option value="gasto">Gasto</option>
-            <option value="ganancia">Ganancia</option>
+            <option value="Gasto">Gasto</option>
+            <option value="Ganancia">Ganancia</option>
           </select>
 
           <label class="block my-[3px] font-light text-base"> Categoría </label>
@@ -333,8 +333,8 @@
             class="block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
           >
             <option value="">Selecciona una opción</option>
-            <option value="gasto">Gasto</option>
-            <option value="ganancia">Ganancia</option>
+            <option value="Gasto">Gasto</option>
+            <option value="Ganancia">Ganancia</option>
           </select>
 
           <label class="block my-[3px] font-light text-base"> Categoría </label>
@@ -439,112 +439,118 @@
       </section>
 
       <!--Seccion Reporte  -->
-      <section
-        id="seccion-reportes"
-        class="flex place-content-center mx-auto hidden"
-      >
-        <div
-          class="p-[10px] w-[60%] min-w-[360px] border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md sm:p-[30px]"
+      <section id="seccion-reportes">
+        <section
+          id="reportes-sin-operaciones"
+          class="flex place-content-center mx-auto hidden"
         >
-          <h2 class="font-bold text-2xl">Reportes</h2>
+          <div
+            class="p-[10px] w-[60%] min-w-[360px] border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md sm:p-[30px]"
+          >
+            <h2 class="font-bold text-2xl">Reportes</h2>
 
-          <picture class="flex justify-center m-8"
-            ><img src="./img/reportes-img.svg" alt="Imagen de un reporte"
-          /></picture>
-          <p class="text-center font-normal text-base">
-            Operaciones insuficientes
-          </p>
-          <p class="text-center font-light text-base">
-            Prueba agregando más operaciones
-          </p>
-        </div>
-      </section>
+            <picture class="flex justify-center m-8"
+              ><img src="./img/reportes-img.svg" alt="Imagen de un reporte"
+            /></picture>
+            <p class="text-center font-normal text-base">
+              Operaciones insuficientes
+            </p>
+            <p class="text-center font-light text-base">
+              Prueba agregando más operaciones
+            </p>
+          </div>
+        </section>
 
-      <!-- seccion Reporte ejemplo -->
+        <!-- seccion Reporte ejemplo -->
 
-      <section class="mx-auto my-5 hidden">
-        <div
-          id="#"
-          class="w-[500px] border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto"
-        >
-          <h2 class="font-bold text-2xl my-2">Reportes</h2>
-          <div>
-            <h3 class="font-semibold text-xl my-5">Resumen</h3>
-            <table class="w-full">
-              <tr class="my-3 text-left">
-                <td>Categoría con mayor ganancia</td>
-                <td class="py-1 px-2 text-emerald-700 rounded text-right">
-                  Trabajo
-                </td>
-                <td class="text-green-600 font-semibold text-right">+$60</td>
-              </tr>
-              <tr class="my-3 text-left">
-                <td>Categoría con mayor gasto</td>
-                <td class="py-1 px-2 text-emerald-700 rounded text-right">
-                  Servicios
-                </td>
-                <td class="text-red-600 font-semibold text-right">-$2</td>
-              </tr>
-              <tr class="my-3 text-left">
-                <td>Categoría con mayor balance</td>
-                <td class="py-1 px-2 text-emerald-700 rounded text-right">
-                  Trabajo
-                </td>
-                <td class="text-slate-950 font-semibold text-right">$60</td>
-              </tr>
-              <tr class="my-3 text-left">
-                <td>Mes con mayor ganancia</td>
-                <td class="text-right">09/08/2024</td>
-                <td class="text-green-600 font-semibold text-right">$60</td>
-              </tr>
-              <tr class="my-3 text-left">
-                <td>Mes con mayor gasto</td>
-                <td class="text-right">08/08/2024</td>
-                <td class="text-red-600 font-semibold text-right">-$2</td>
-              </tr>
-            </table>
+        <section class="mx-auto my-5 hidden" id="reporte-con-operaciones">
+          <div
+            class="w-[500px] border-solid border-[0.5px] border-red-100 shadow-lg shadow-red-100 rounded-md p-[30px] m-auto"
+          >
+            <h2 class="font-bold text-2xl my-2">Reportes</h2>
+            <div>
+              <h3 class="font-semibold text-xl my-5">Resumen</h3>
+              <table class="w-full">
+                <tr class="my-3 text-left">
+                  <td>Categoría con mayor ganancia</td>
+                  <td
+                    class="py-1 px-2 text-emerald-700 rounded text-right"
+                    id="categoria-con-mas-ganancia-nombre"
+                  ></td>
+                  <td
+                    class="text-green-600 font-semibold text-right"
+                    id="categoria-con-mas-ganancia-monto"
+                  ></td>
+                </tr>
+                <tr class="my-3 text-left">
+                  <td>Categoría con mayor gasto</td>
+                  <td
+                    class="py-1 px-2 text-emerald-700 rounded text-right"
+                    id="categoria-con-mas-gastos-nombre"
+                  ></td>
+                  <td
+                    class="text-red-600 font-semibold text-right"
+                    id="categoria-con-mas-gastos-monto"
+                  ></td>
+                </tr>
+                <tr class="my-3 text-left">
+                  <td>Categoría con mayor balance</td>
+                  <td
+                    class="py-1 px-2 text-emerald-700 rounded text-right"
+                    id="categoria-con-mas-balance-nombre"
+                  ></td>
+                  <td
+                    class="text-slate-950 font-semibold text-right"
+                    id="categoria-con-mas-balance-monto"
+                  ></td>
+                </tr>
+                <tr class="my-3 text-left">
+                  <td>Mes con mayor ganancia</td>
+                  <td class="text-right" id="mes-mas-ganancia-nombre"></td>
+                  <td
+                    class="text-green-600 font-semibold text-right"
+                    id="mes-mas-ganancia-monto"
+                  ></td>
+                </tr>
+                <tr class="my-3 text-left">
+                  <td>Mes con mayor gasto</td>
+                  <td class="text-right" id="mes-mas-gasto-nombre"></td>
+                  <td
+                    class="text-red-600 font-semibold text-right"
+                    id="mes-mas-gasto-monto"
+                  ></td>
+                </tr>
+              </table>
+            </div>
+            <div>
+              <h3 class="font-semibold text-xl my-5">Total por categorías</h3>
+              <table class="w-full">
+                <tr class="my-3 text-right">
+                  <th class="text-left">Categoría</th>
+                  <th>Ganancia</th>
+                  <th>Gastos</th>
+                  <th>Balance</th>
+                  <tbody
+                    id="tabla-total-por-categoria"
+                    class="my-3 text-right"
+                  ></tbody>
+                </tr>
+              </table>
+            </div>
+            <div>
+              <h3 class="font-semibold text-xl my-5">Total por mes</h3>
+              <table class="w-full">
+                <tr class="my-3 text-right">
+                  <th class="text-left">Mes</th>
+                  <th>Ganancia</th>
+                  <th>Gastos</th>
+                  <th>Balance</th>
+                </tr>
+                <tbody id="tabla-total-por-mes" class="my-3 text-right"></tbody>
+              </table>
+            </div>
           </div>
-          <div>
-            <h3 class="font-semibold text-xl my-5">Total por categorías</h3>
-            <table class="w-full">
-              <tr class="my-3 text-right">
-                <th class="text-left">Categoría</th>
-                <th>Ganancia</th>
-                <th>Gastos</th>
-                <th>Balance</th>
-              </tr>
-              <tr class="my-3 text-right">
-                <th class="text-left">Servicios</th>
-                <td class="text-green-600">+$0</td>
-                <td class="text-red-600">-$2</td>
-                <td>-$2</td>
-              </tr>
-              <tr class="my-3 text-right">
-                <th class="text-left">Trabajo</th>
-                <td class="text-green-600">+$60</td>
-                <td class="text-red-600">-$0</td>
-                <td>$60</td>
-              </tr>
-            </table>
-          </div>
-          <div>
-            <h3 class="font-semibold text-xl my-5">Total por mes</h3>
-            <table class="w-full">
-              <tr class="my-3 text-right">
-                <th class="text-left">Mes</th>
-                <th>Ganancia</th>
-                <th>Gastos</th>
-                <th>Balance</th>
-              </tr>
-              <tr class="my-3 text-right">
-                <th class="text-left">8/20204</th>
-                <td class="text-green-600">+$60</td>
-                <td class="text-red-600">-$2</td>
-                <td>$58</td>
-              </tr>
-            </table>
-          </div>
-        </div>
+        </section>
       </section>
     </main>
     <script src="main.js"></script>
