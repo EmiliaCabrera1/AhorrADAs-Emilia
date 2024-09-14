@@ -49,6 +49,8 @@ const inputFiltrarOrden = $("filtrar-orden");
 const balanceTotalGanancias = $("balance-total-ganancias");
 const balanceTotalGastos = $("balance-total-gastos");
 const balanceTotal = $("balance-total");
+const reporteSinOperaciones = $("reportes-sin-operaciones");
+const reporteConOperaciones = $("reporte-con-operaciones");
 const categoriaMasGananciaNombre = $("categoria-con-mas-ganancia-nombre");
 const categoriaMasGananciaMonto = $("categoria-con-mas-ganancia-monto");
 const categoriaMasGastoNombre = $("categoria-con-mas-gastos-nombre");
@@ -59,6 +61,8 @@ const mesMasGananciaNombre = $("mes-mas-ganancia-nombre");
 const mesMasGananciaMonto = $("mes-mas-ganancia-monto");
 const mesMasGastoNombre = $("mes-mas-gasto-nombre");
 const mesMasGastoMonto = $("mes-mas-gasto-monto");
+const tabTotalPorCat = $("tabla-total-por-categoria");
+const tabTotalPorMes = $("tabla-total-por-mes");
 
 /*revisa el conteo de las operaciones, primero se fija si hay operaciones 
  guardadas para seguir numerando, si no hay inicia en 0 */
@@ -463,6 +467,16 @@ function balancetotal() {
   );
 }
 
+function mostrarTablaReporte() {
+  if (JSON.parse(localStorage.getItem("operaciones")).length > 0) {
+    reporteSinOperaciones.classList.add("hidden");
+    reporteConOperaciones.classList.remove("hidden");
+  } else {
+    reporteSinOperaciones.classList.remove("hidden");
+    reporteConOperaciones.classList.add("hidden");
+  }
+}
+
 function agruparCategorias(operaciones) {
   const operacionesPorCategoria = operaciones.reduce(
     (acumulador, operacion) => {
@@ -498,7 +512,7 @@ function categoriaMayorGanancia() {
     ([, a], [, b]) => b.ganancias - a.ganancias
   );
   categoriaMasGananciaNombre.innerText = gananciasPorCategoria[0][0];
-  categoriaMasGananciaMonto.innerText = gananciasPorCategoria[0][1].ganancias;
+  categoriaMasGananciaMonto.innerText = `$${gananciasPorCategoria[0][1].ganancias}`;
 }
 
 function categoriaMayorGasto() {
@@ -510,7 +524,7 @@ function categoriaMayorGasto() {
     ([, a], [, b]) => b.gastos - a.gastos
   );
   categoriaMasGastoNombre.innerText = gastosPorCategoria[0][0];
-  categoriaMasGastoMonto.innerText = gastosPorCategoria[0][1].gastos;
+  categoriaMasGastoMonto.innerText = `-$${gastosPorCategoria[0][1].gastos}`;
 }
 
 function categoriaMayorBalance() {
@@ -520,16 +534,43 @@ function categoriaMayorBalance() {
   balancePorCategoria = balancePorCategoria.sort(
     ([, a], [, b]) => b.ganancias - b.gastos - a.ganancias - a.gastos
   );
-  debugger;
+
   categoriaMasBalanceoNombre.innerText = balancePorCategoria[0][0];
-  categoriaMasBalanceoMonto.innerText =
+  categoriaMasBalanceoMonto.innerText = `$${
     parseInt(balancePorCategoria[0][1].ganancias || 0) -
-    parseInt(balancePorCategoria[0][1].gasto || 0);
+    parseInt(balancePorCategoria[0][1].gasto || 0)
+  }`;
+}
+
+function totalPorCategorias() {
+  tabTotalPorCat.innerHTML = "";
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const categorias = agruparCategorias(operaciones);
+
+  Object.entries(categorias).forEach(([categoria, datos]) => {
+    const row = document.createElement("tr");
+    const balance = datos.ganancias - datos.gastos;
+
+    row.innerHTML = `
+          <td class="text-left">${categoria}</td>
+          <td class="text-green-600">$${datos.ganancias}</td>
+          <td class="text-red-600">-$${datos.gastos}</td>
+          <td class="${balance >= 0 ? "text-green-600" : "text-red-600"}">
+              ${balance >= 0 ? "+" : "-"}$${Math.abs(balance)}
+          </td>
+      `;
+
+    tabTotalPorCat.appendChild(row);
+  });
 }
 
 mostrarCategoriaInputFiltros();
 listaDeOperaciones();
 mostrarTablaCategorias();
+mostrarTablaReporte();
 categoriaMayorGanancia();
 categoriaMayorGasto();
 categoriaMayorBalance();
+totalPorCategorias();
+totalPorMes();
