@@ -82,6 +82,7 @@ function mostrarReporte() {
   seccionEditarOperacion.classList.add("hidden");
   seccionEditarCategoria.classList.add("hidden");
   seccionReportes.classList.remove("hidden");
+  mostrarTablaReporte();
 }
 reporteNav.addEventListener("click", mostrarReporte);
 
