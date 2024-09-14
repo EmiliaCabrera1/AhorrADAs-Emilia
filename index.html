@@ -131,50 +131,58 @@
           >
             <div class="flex justify-between w-[100%]">
               <h2 class="font-bold text-2xl">Filtros</h2>
-              <button id="ocultarFiltros" class="m-[5px] text-cyan-600">
+              <button id="button-ocultar-filtros" class="m-[5px] text-cyan-600">
                 Ocultar filtros
               </button>
-            </div>
-            <div class="w-[100%] my-2">
-              <h3>Tipos</h3>
-              <select
-                id="filtrar-tipo"
-                class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+              <button
+                id="button-mostrar-filtros"
+                class="m-[5px] text-cyan-600 hidden"
               >
-                <option value="Todos">Todos</option>
-                <option value="Gasto">Gasto</option>
-                <option value="Ganancia">Ganancia</option>
-              </select>
+                Mostrar filtros
+              </button>
             </div>
-            <div class="w-[100%] my-2">
-              <h3>Categoria</h3>
-              <select
-                id="filtrar-categoria"
-                class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
-              ></select>
-            </div>
-            <div class="w-[100%] my-2 flex flex-col">
-              <label for="data">Desde</label>
-              <input
-                type="date"
-                id="filtrar-fecha"
-                name="data"
-                class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div class="w-[100%] my-2">
-              <h3>Ordenar por</h3>
-              <select
-                id="filtrar-orden"
-                class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
-              >
-                <option value="masReciente">Mas reciente</option>
-                <option value="menosReciente">Menos reciente</option>
-                <option value="mayorMonto">Mayor monto</option>
-                <option value="menorMonto">Menor monto</option>
-                <option value="a/z">A/Z</option>
-                <option value="z/a">Z/A</option>
-              </select>
+            <div class="w-[100%] my-2" id="input-filtros">
+              <div>
+                <h3>Tipos</h3>
+                <select
+                  id="filtrar-tipo"
+                  class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+                >
+                  <option value="Todos">Todos</option>
+                  <option value="Gasto">Gasto</option>
+                  <option value="Ganancia">Ganancia</option>
+                </select>
+              </div>
+              <div class="w-[100%] my-2">
+                <h3>Categoria</h3>
+                <select
+                  id="filtrar-categoria"
+                  class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+                ></select>
+              </div>
+              <div class="w-[100%] my-2 flex flex-col">
+                <label for="data">Desde</label>
+                <input
+                  type="date"
+                  id="filtrar-fecha"
+                  name="data"
+                  class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+                />
+              </div>
+              <div class="w-[100%] my-2">
+                <h3>Ordenar por</h3>
+                <select
+                  id="filtrar-orden"
+                  class="w-[80%] block border-[0.5px] w-full rounded shadow-sm my-2 p-1 focus:outline-none focus:border-emerald-500-0.5 focus:shadow-lg focus:ring-1 focus:ring-emerald-500"
+                >
+                  <option value="masReciente">Mas reciente</option>
+                  <option value="menosReciente">Menos reciente</option>
+                  <option value="mayorMonto">Mayor monto</option>
+                  <option value="menorMonto">Menor monto</option>
+                  <option value="a/z">A/Z</option>
+                  <option value="z/a">Z/A</option>
+                </select>
+              </div>
             </div>
           </div>
         </section>
@@ -439,7 +447,7 @@
       </section>
 
       <!--Seccion Reporte  -->
-      <section id="seccion-reportes">
+      <section id="seccion-reportes" class="hidden">
         <section
           id="reportes-sin-operaciones"
           class="flex place-content-center mx-auto hidden"

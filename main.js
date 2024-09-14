@@ -42,6 +42,9 @@ const inputEditarCategoria = $("input-editar-categoria");
 const botonEditarCategoria = $("editar-categoria");
 const botonCancelarEdicionCategoria = $("cancelar-edicion");
 const seccionEditarCategoria = $("seccion-editar-categoria");
+const inputFiltros = $("input-filtros");
+const botonOcultarFiltros = $("button-ocultar-filtros");
+const botonMostrarFiltros = $("button-mostrar-filtros");
 const inputFiltrarTipo = $("filtrar-tipo");
 const inputFiltrarCategoria = $("filtrar-categoria");
 const inputFiltrarFecha = $("filtrar-fecha");
@@ -390,6 +393,23 @@ function guardarEditarCategoria(value) {
   seccionCategorias.classList.remove("hidden");
   mostrarTablaCategorias();
 }
+
+function funcionOcultarFiltros() {
+  inputFiltros.classList.add("hidden");
+  botonOcultarFiltros.classList.add("hidden");
+  botonMostrarFiltros.classList.remove("hidden");
+}
+
+botonOcultarFiltros.addEventListener("click", funcionOcultarFiltros);
+
+function funcionMostrarFiltros() {
+  inputFiltros.classList.remove("hidden");
+  botonOcultarFiltros.classList.remove("hidden");
+  botonMostrarFiltros.classList.add("hidden");
+}
+
+botonMostrarFiltros.addEventListener("click", funcionMostrarFiltros);
+
 function mostrarCategoriaInputFiltros() {
   const categorias = JSON.parse(localStorage.getItem("categorias") || []);
 
