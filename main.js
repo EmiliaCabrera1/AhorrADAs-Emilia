@@ -49,16 +49,16 @@ const inputFiltrarOrden = $("filtrar-orden");
 const balanceTotalGanancias = $("balance-total-ganancias");
 const balanceTotalGastos = $("balance-total-gastos");
 const balanceTotal = $("balance-total");
-const balanceTotal = $("categoria-con-mas-ganancia-nombre");
-const balanceTotal = $("categoria-con-mas-ganancia-monto");
-const balanceTotal = $("categoria-con-mas-gastos-nombre");
-const balanceTotal = $("categoria-con-mas-gastos-monto");
-const balanceTotal = $("balance-total");
-const balanceTotal = $("balance-total");
-const balanceTotal = $("balance-total");
-const balanceTotal = $("balance-total");
-const balanceTotal = $("balance-total");
-const balanceTotal = $("balance-total");
+const categoriaMasGananciaNombre = $("categoria-con-mas-ganancia-nombre");
+const categoriaMasGananciaMonto = $("categoria-con-mas-ganancia-monto");
+const categoriaMasGastoNombre = $("categoria-con-mas-gastos-nombre");
+const categoriaMasGastoMonto = $("categoria-con-mas-gastos-monto");
+const categoriaMasBalanceoNombre = $("categoria-con-mas-balance-nombre");
+const categoriaMasBalanceoMonto = $("categoria-con-mas-balance-monto");
+const mesMasGananciaNombre = $("mes-mas-ganancia-nombre");
+const mesMasGananciaMonto = $("mes-mas-ganancia-monto");
+const mesMasGastoNombre = $("mes-mas-gasto-nombre");
+const mesMasGastoMonto = $("mes-mas-gasto-monto");
 
 /*revisa el conteo de las operaciones, primero se fija si hay operaciones 
  guardadas para seguir numerando, si no hay inicia en 0 */
@@ -372,7 +372,6 @@ function cancelarEdicion() {
 botonCancelarEdicionCategoria.addEventListener("click", cancelarEdicion);
 
 function guardarEditarCategoria(value) {
-  console.log("Guardar Editar", value);
   let categoriasGuardadas = JSON.parse(
     localStorage.getItem("categorias") || []
   );
@@ -464,6 +463,73 @@ function balancetotal() {
   );
 }
 
+function agruparCategorias(operaciones) {
+  const operacionesPorCategoria = operaciones.reduce(
+    (acumulador, operacion) => {
+      const categoria = operacion.categoria;
+      if (!acumulador[categoria]) {
+        acumulador[categoria] = { ganancias: 0, gastos: 0, operaciones: [] };
+      }
+
+      if (operacion.tipo === "Ganancia") {
+        acumulador[categoria].ganancias += parseInt(operacion.monto);
+      } else if (operacion.tipo === "Gasto") {
+        acumulador[categoria].gastos += parseInt(operacion.monto);
+      }
+
+      acumulador[categoria].operaciones.push(operacion);
+
+      return acumulador;
+    },
+    []
+  );
+
+  return operacionesPorCategoria;
+}
+
+function categoriaMayorGanancia() {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const ganancias = operaciones.filter(
+    (operacion) => operacion.tipo === "Ganancia"
+  );
+  let gananciasPorCategoria = Object.entries(agruparCategorias(ganancias));
+  gananciasPorCategoria = gananciasPorCategoria.sort(
+    ([, a], [, b]) => b.ganancias - a.ganancias
+  );
+  categoriaMasGananciaNombre.innerText = gananciasPorCategoria[0][0];
+  categoriaMasGananciaMonto.innerText = gananciasPorCategoria[0][1].ganancias;
+}
+
+function categoriaMayorGasto() {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const gastos = operaciones.filter((operacion) => operacion.tipo === "Gasto");
+  let gastosPorCategoria = Object.entries(agruparCategorias(gastos));
+  gastosPorCategoria = gastosPorCategoria.sort(
+    ([, a], [, b]) => b.gastos - a.gastos
+  );
+  categoriaMasGastoNombre.innerText = gastosPorCategoria[0][0];
+  categoriaMasGastoMonto.innerText = gastosPorCategoria[0][1].gastos;
+}
+
+function categoriaMayorBalance() {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  let balancePorCategoria = Object.entries(agruparCategorias(operaciones));
+  balancePorCategoria = balancePorCategoria.sort(
+    ([, a], [, b]) => b.ganancias - b.gastos - a.ganancias - a.gastos
+  );
+  debugger;
+  categoriaMasBalanceoNombre.innerText = balancePorCategoria[0][0];
+  categoriaMasBalanceoMonto.innerText =
+    parseInt(balancePorCategoria[0][1].ganancias || 0) -
+    parseInt(balancePorCategoria[0][1].gasto || 0);
+}
+
 mostrarCategoriaInputFiltros();
 listaDeOperaciones();
 mostrarTablaCategorias();
+categoriaMayorGanancia();
+categoriaMayorGasto();
+categoriaMayorBalance();
