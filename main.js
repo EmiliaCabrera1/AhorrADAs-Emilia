@@ -478,6 +478,7 @@ function mostrarTablaReporte() {
     reporteSinOperaciones.classList.remove("hidden");
     reporteConOperaciones.classList.add("hidden");
   }
+  actualizarReporte();
 }
 
 function agruparCategorias(operaciones) {
@@ -510,24 +511,28 @@ function categoriaMayorGanancia() {
   const ganancias = operaciones.filter(
     (operacion) => operacion.tipo === "Ganancia"
   );
-  let gananciasPorCategoria = Object.entries(agruparCategorias(ganancias));
-  gananciasPorCategoria = gananciasPorCategoria.sort(
-    ([, a], [, b]) => b.ganancias - a.ganancias
-  );
-  categoriaMasGananciaNombre.innerText = gananciasPorCategoria[0][0];
-  categoriaMasGananciaMonto.innerText = `$${gananciasPorCategoria[0][1].ganancias}`;
+  if (ganancias.length > 0) {
+    let gananciasPorCategoria = Object.entries(agruparCategorias(ganancias));
+    gananciasPorCategoria = gananciasPorCategoria.sort(
+      ([, a], [, b]) => b.ganancias - a.ganancias
+    );
+    categoriaMasGananciaNombre.innerText = gananciasPorCategoria[0][0];
+    categoriaMasGananciaMonto.innerText = `$${gananciasPorCategoria[0][1].ganancias}`;
+  }
 }
 
 function categoriaMayorGasto() {
   const operacionesJSON = localStorage.getItem("operaciones");
   const operaciones = JSON.parse(operacionesJSON) || [];
   const gastos = operaciones.filter((operacion) => operacion.tipo === "Gasto");
-  let gastosPorCategoria = Object.entries(agruparCategorias(gastos));
-  gastosPorCategoria = gastosPorCategoria.sort(
-    ([, a], [, b]) => b.gastos - a.gastos
-  );
-  categoriaMasGastoNombre.innerText = gastosPorCategoria[0][0];
-  categoriaMasGastoMonto.innerText = `-$${gastosPorCategoria[0][1].gastos}`;
+  if (gastos.length > 0) {
+    let gastosPorCategoria = Object.entries(agruparCategorias(gastos));
+    gastosPorCategoria = gastosPorCategoria.sort(
+      ([, a], [, b]) => b.gastos - a.gastos
+    );
+    categoriaMasGastoNombre.innerText = gastosPorCategoria[0][0];
+    categoriaMasGastoMonto.innerText = `-$${gastosPorCategoria[0][1].gastos}`;
+  }
 }
 
 function categoriaMayorBalance() {
@@ -615,22 +620,26 @@ function mesMayorGanancia() {
   const ganancias = operaciones.filter(
     (operacion) => operacion.tipo === "Ganancia"
   );
-  let gananciasPorMes = Object.entries(agruparPorMes(ganancias));
-  gananciasPorMes = gananciasPorMes.sort(
-    ([, a], [, b]) => b.ganancias - a.ganancias
-  );
-  mesMasGananciaNombre.innerText = gananciasPorMes[0][0];
-  mesMasGananciaMonto.innerText = `$${gananciasPorMes[0][1].ganancias}`;
+  if (ganancias.length > 0) {
+    let gananciasPorMes = Object.entries(agruparPorMes(ganancias));
+    gananciasPorMes = gananciasPorMes.sort(
+      ([, a], [, b]) => b.ganancias - a.ganancias
+    );
+    mesMasGananciaNombre.innerText = gananciasPorMes[0][0];
+    mesMasGananciaMonto.innerText = `$${gananciasPorMes[0][1].ganancias}`;
+  }
 }
 
 function mesMayorGasto() {
   const operacionesJSON = localStorage.getItem("operaciones");
   const operaciones = JSON.parse(operacionesJSON) || [];
   const gastos = operaciones.filter((operacion) => operacion.tipo === "Gasto");
-  let gastosPorMes = Object.entries(agruparPorMes(gastos));
-  gastosPorMes = gastosPorMes.sort(([, a], [, b]) => b.gastos - a.gastos);
-  mesMasGastoNombre.innerText = gastosPorMes[0][0];
-  mesMasGastoMonto.innerText = `-$${gastosPorMes[0][1].gastos}`;
+  if (gastos.length > 0) {
+    let gastosPorMes = Object.entries(agruparPorMes(gastos));
+    gastosPorMes = gastosPorMes.sort(([, a], [, b]) => b.gastos - a.gastos);
+    mesMasGastoNombre.innerText = gastosPorMes[0][0];
+    mesMasGastoMonto.innerText = `-$${gastosPorMes[0][1].gastos}`;
+  }
 }
 
 function ordenarMasReciente(operaciones) {
@@ -670,16 +679,20 @@ function ordenar(operaciones, orden) {
   }
 }
 
+function actualizarReporte() {
+  categoriaMayorGanancia();
+  categoriaMayorGasto();
+  categoriaMayorBalance();
+  totalPorCategorias();
+  totalPorMes();
+  mesMayorGanancia();
+  mesMayorGasto();
+}
+
 inputFiltrarOrden.addEventListener("change", listaDeOperaciones);
 
 mostrarCategoriaInputFiltros();
 listaDeOperaciones();
 mostrarTablaCategorias();
 mostrarTablaReporte();
-categoriaMayorGanancia();
-categoriaMayorGasto();
-categoriaMayorBalance();
-totalPorCategorias();
-totalPorMes();
-mesMayorGanancia();
-mesMayorGasto();
+actualizarReporte();
