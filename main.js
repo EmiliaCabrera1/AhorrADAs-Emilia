@@ -67,9 +67,6 @@ const mesMasGastoMonto = $("mes-mas-gasto-monto");
 const tabTotalPorCat = $("tabla-total-por-categoria");
 const tabTotalPorMes = $("tabla-total-por-mes");
 
-/*revisa el conteo de las operaciones, primero se fija si hay operaciones 
- guardadas para seguir numerando, si no hay inicia en 0 */
-
 if (localStorage.getItem("contadorDeOperaciones")) {
   contadorDeOperaciones = parseInt(
     localStorage.getItem("contadorDeOperaciones")
@@ -140,11 +137,6 @@ function borrarDatos() {
   inputFecha.value = currentDate.toISOString().slice(0, 10);
 }
 
-/* guarda los datos de cada input en localStorage, contadorDeOperaciones++ aumenta el numero 
-asi las operaciones son 1,2,3 etc.
-despues crea un objeto con todos los datos de los input
-*/
-
 function guardarDatos() {
   contadorDeOperaciones++;
   const operacion = {
@@ -155,17 +147,15 @@ function guardarDatos() {
     categoria: selectCategoria.value,
     fecha: inputFecha.value,
   };
-  /* trae las operaciones ya guardadas y sino empieza un nuevo array*/
   const operacionesJSON = localStorage.getItem("operaciones");
   let operaciones = JSON.parse(operacionesJSON);
   if (operaciones === null) {
     operaciones = [];
   }
-  /* agrega el objeto de la nueva operacion al grupo de operaciones que ya teniamos o el creado de cero*/
-  operaciones.push(operacion); //push agrega la operacion
-  localStorage.setItem("operaciones", JSON.stringify(operaciones)); //convierte el array en un string y lo guarda en locals
-  localStorage.setItem("contadorDeOperaciones", contadorDeOperaciones); // guarda el contador aumentado
-  borrarDatos(); //borra los datos del formulario
+  operaciones.push(operacion);
+  localStorage.setItem("operaciones", JSON.stringify(operaciones));
+  localStorage.setItem("contadorDeOperaciones", contadorDeOperaciones);
+  borrarDatos();
 }
 
 function volverPantallaPrincipal() {
@@ -177,9 +167,7 @@ botonAgregarOperacion.addEventListener("click", guardarDatos);
 botonCancelarOperacion.addEventListener("click", volverPantallaPrincipal);
 
 function crearTablaOperaciones() {
-  /*limpia la tabla*/
   tablaCuerpoOperaciones.innerHTML = "";
-  /*trae los datos del local storage y los convierte en un array de objetos*/
   const operacionesJSON = localStorage.getItem("operaciones");
   let operaciones = JSON.parse(operacionesJSON);
 
@@ -187,13 +175,10 @@ function crearTablaOperaciones() {
   operaciones = filtrarPorCategoria(operaciones, inputFiltrarCategoria.value);
   operaciones = filtrarPorFecha(operaciones, inputFiltrarFecha.value);
 
-  //  ordenar
   operaciones = ordenar(operaciones, inputFiltrarOrden.value);
 
-  /*para cada operacion crea una fila*/
   operaciones.forEach((operacion) => {
     const row = document.createElement("tr");
-    /*Estilamos la fila porque ya no existe en html, la creamos y estilamos */
     row.innerHTML = `
       <td class="text-left">${operacion.descripcion}</td>
       <td class="bg-emerald-100 py-1 px-2 text-emerald-700 rounded inline">${
@@ -214,7 +199,7 @@ function crearTablaOperaciones() {
         }) >Eliminar</button>
       </td>
     `;
-    /*Aparece la fila* */
+
     tablaCuerpoOperaciones.appendChild(row);
 
     balanceGanancias();
@@ -234,9 +219,6 @@ function listaDeOperaciones() {
   }
 }
 
-/* editar operacion, agrege una seccion en html de editar operacion igual
-  a la de nueva operacion pero con boton editar */
-
 function editarOperacion(id) {
   pantallaPrincipal.classList.add("hidden");
   seccionEditarOperacion.classList.remove("hidden");
@@ -246,16 +228,16 @@ function editarOperacion(id) {
   const operaciones = JSON.parse(operacionesJSON);
 
   const operacion = operaciones.find((operacion) => {
-    return operacion.id === id; // busca la operacion con un id exactamente igual al id de arriba
+    return operacion.id === id;
   });
 
   inputDescripcionEditar.value = operacion.descripcion;
   inputMontoEditar.value = operacion.monto;
   selectTipoEditar.value = operacion.tipo;
   selectCategoriaEditar.value = operacion.categoria;
-  inputFechaEditar.value = operacion.fecha; //trae los datos que corresponden a ese id
+  inputFechaEditar.value = operacion.fecha;
 
-  botonGuardarEdiccion.addEventListener("click", () => guardarEdicion(id)); //() => espera a el click para ejecutar guardarEdicion
+  botonGuardarEdiccion.addEventListener("click", () => guardarEdicion(id));
 }
 
 function guardarEdicion(id) {
@@ -270,7 +252,7 @@ function guardarEdicion(id) {
 
   const operacionesJSON = localStorage.getItem("operaciones");
   let operaciones = JSON.parse(operacionesJSON);
-  operaciones = operaciones.filter((operacion) => operacion.id !== id); // operaciones filtra y solo guarda las diferentes a mi id
+  operaciones = operaciones.filter((operacion) => operacion.id !== id);
 
   operaciones.push(operacion);
   localStorage.setItem("operaciones", JSON.stringify(operaciones));
@@ -301,14 +283,13 @@ function crearCategoriasPorDefecto() {
   ];
   localStorage.setItem("categorias", JSON.stringify(categoriasPorDefecto));
 }
-/* revisa si hay categorias guardadas, si no las hay muesta las categorias por defecto*/
+
 function mostrarTablaCategorias() {
   if (!localStorage.getItem("categorias")) {
-    // ! niega la afirmacion
     crearCategoriasPorDefecto();
   }
 
-  tablaCuerpoCategorias.innerHTML = ""; //limpia la tabla, para cargar la nueva si algo se elimino o0 edito
+  tablaCuerpoCategorias.innerHTML = "";
 
   const categoriasGuardadas =
     JSON.parse(localStorage.getItem("categorias")) || [];
@@ -589,7 +570,7 @@ function totalPorCategorias() {
 function agruparPorMes(operaciones) {
   return operaciones.reduce((acumulador, operacion) => {
     const fecha = new Date(operacion.fecha);
-    const mes = `${fecha.getFullYear()}-${fecha.getMonth() + 1}`; // Formato: "YYYY-MM"
+    const mes = `${fecha.getFullYear()}-${fecha.getMonth() + 1}`;
 
     if (!acumulador[mes]) {
       acumulador[mes] = { ganancias: 0, gastos: 0 };
