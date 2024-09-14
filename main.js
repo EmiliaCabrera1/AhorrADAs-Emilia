@@ -187,7 +187,8 @@ function crearTablaOperaciones() {
   operaciones = filtrarPorCategoria(operaciones, inputFiltrarCategoria.value);
   operaciones = filtrarPorFecha(operaciones, inputFiltrarFecha.value);
 
-  //  escribir funciones filtro
+  //  ordenar
+  operaciones = ordenar(operaciones, inputFiltrarOrden.value);
 
   /*para cada operacion crea una fila*/
   operaciones.forEach((operacion) => {
@@ -585,6 +586,110 @@ function totalPorCategorias() {
   });
 }
 
+function agruparPorMes(operaciones) {
+  return operaciones.reduce((acumulador, operacion) => {
+    const fecha = new Date(operacion.fecha);
+    const mes = `${fecha.getFullYear()}-${fecha.getMonth() + 1}`; // Formato: "YYYY-MM"
+
+    if (!acumulador[mes]) {
+      acumulador[mes] = { ganancias: 0, gastos: 0 };
+    }
+
+    if (operacion.tipo === "Ganancia") {
+      acumulador[mes].ganancias += parseFloat(operacion.monto);
+    } else if (operacion.tipo === "Gasto") {
+      acumulador[mes].gastos += parseFloat(operacion.monto);
+    }
+
+    return acumulador;
+  }, []);
+}
+
+function totalPorMes() {
+  tabTotalPorMes.innerHTML = "";
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const meses = agruparPorMes(operaciones);
+
+  Object.entries(meses).forEach(([mes, datos]) => {
+    const row = document.createElement("tr");
+    const balance = datos.ganancias - datos.gastos;
+
+    row.innerHTML = `
+          <td class="text-left">${mes}</td>
+          <td class="text-green-600">$${datos.ganancias.toFixed(2)}</td>
+          <td class="text-red-600">-$${datos.gastos.toFixed(2)}</td>
+          <td class="${balance >= 0 ? "text-green-600" : "text-red-600"}">
+              ${balance >= 0 ? "+" : "-"}$${Math.abs(balance).toFixed(2)}
+          </td>
+      `;
+
+    tabTotalPorMes.appendChild(row);
+  });
+}
+function mesMayorGanancia() {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const ganancias = operaciones.filter(
+    (operacion) => operacion.tipo === "Ganancia"
+  );
+  let gananciasPorMes = Object.entries(agruparPorMes(ganancias));
+  gananciasPorMes = gananciasPorMes.sort(
+    ([, a], [, b]) => b.ganancias - a.ganancias
+  );
+  mesMasGananciaNombre.innerText = gananciasPorMes[0][0];
+  mesMasGananciaMonto.innerText = `$${gananciasPorMes[0][1].ganancias}`;
+}
+
+function mesMayorGasto() {
+  const operacionesJSON = localStorage.getItem("operaciones");
+  const operaciones = JSON.parse(operacionesJSON) || [];
+  const gastos = operaciones.filter((operacion) => operacion.tipo === "Gasto");
+  let gastosPorMes = Object.entries(agruparPorMes(gastos));
+  gastosPorMes = gastosPorMes.sort(([, a], [, b]) => b.gastos - a.gastos);
+  mesMasGastoNombre.innerText = gastosPorMes[0][0];
+  mesMasGastoMonto.innerText = `-$${gastosPorMes[0][1].gastos}`;
+}
+
+function ordenarMasReciente(operaciones) {
+  return operaciones.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+}
+function ordenarMenosReciente(operaciones) {
+  return operaciones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+}
+function ordenarMayorMonto(operaciones) {
+  return operaciones.sort((a, b) => b.monto - a.monto);
+}
+function ordenarMenorMonto(operaciones) {
+  return operaciones.sort((a, b) => a.monto - b.monto);
+}
+function ordenarAZ(operaciones) {
+  return operaciones.sort((a, b) => a.descripcion.localeCompare(b.descripcion));
+}
+function ordenarZA(operaciones) {
+  return operaciones.sort((a, b) => b.descripcion.localeCompare(a.descripcion));
+}
+function ordenar(operaciones, orden) {
+  switch (orden) {
+    case "masReciente":
+      return ordenarMasReciente(operaciones);
+    case "menosReciente":
+      return ordenarMenosReciente(operaciones);
+    case "mayorMonto":
+      return ordenarMayorMonto(operaciones);
+    case "menorMonto":
+      return ordenarMenorMonto(operaciones);
+    case "a/z":
+      return ordenarAZ(operaciones);
+    case "z/a":
+      return ordenarZA(operaciones);
+    default:
+      return operaciones;
+  }
+}
+
+inputFiltrarOrden.addEventListener("change", listaDeOperaciones);
+
 mostrarCategoriaInputFiltros();
 listaDeOperaciones();
 mostrarTablaCategorias();
@@ -594,3 +699,5 @@ categoriaMayorGasto();
 categoriaMayorBalance();
 totalPorCategorias();
 totalPorMes();
+mesMayorGanancia();
+mesMayorGasto();
