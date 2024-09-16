@@ -355,6 +355,7 @@ function editarCategoria(value) {
     guardarEditarCategoria(value)
   );
 }
+
 function cancelarEdicion() {
   seccionEditarCategoria.classList.add("hidden");
   seccionCategorias.classList.remove("hidden");
